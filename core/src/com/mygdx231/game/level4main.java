@@ -171,7 +171,7 @@ public class level4main extends Game {
             for (Rectangle de : death4_1) {
                 batch.draw(curentFramesword2, de.x, de.y);
             }
-            
+
 
         }
 
