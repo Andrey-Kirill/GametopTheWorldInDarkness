@@ -36,13 +36,15 @@ public class level4main extends Game {
     int b = 0;
     Array<Rectangle> levels3;
     ArrayList<Rectangle> death4_1;
+    Array<Rectangle> raindrops;
     long lastDropTime3;
+    long lastDropTime;
     public  Texture deathanim;
     public Texture deathanim2;
     Rectangle death;
     public static final int FRAME_COLS4 = 3, FRAME_ROWS4 = 1 ;
     public static final int FRAME_COLS5 = 3, FRAME_ROWS5 = 1 ;
-    public static final int FRAME_COLS6 = 1, FRAME_ROWS6 = 4 ;
+    public static final int FRAME_COLS6 = 1, FRAME_ROWS6 = 2 ;
     // Objects used
 
     public Animation<TextureRegion> swordan;
@@ -96,6 +98,8 @@ public class level4main extends Game {
         death4_1 =  new ArrayList<>();
         death4_1.add(death);
 
+        raindrops = new Array<>();
+
 
         int index4 = 0;
         TextureRegion[][] tm4 = TextureRegion.split(deathanim
@@ -131,7 +135,7 @@ public class level4main extends Game {
             for(int j = 0; j < FRAME_COLS6; j++)
                 walkframes6[index6++] = tm6[i][j];
         }
-        swordan3 = new Animation<TextureRegion>(0.40f, walkframes6);
+        swordan3 = new Animation<TextureRegion>(0.21f, walkframes6);
         StateTime6 = 0f;
 
     }
@@ -139,11 +143,21 @@ public class level4main extends Game {
     private void spawn3() {
         Rectangle sp3 = new Rectangle();
         sp3.y = MathUtils.random(160,160);
-        sp3.x = MathUtils.random(700, 700);
+        sp3.x = MathUtils.random(660, 660);
         sp3.width = 28;
         sp3.height = 98;
         levels3.add(sp3);
         lastDropTime3 = TimeUtils.nanoTime();
+    }
+
+    private void spawnRaindrop() {
+        Rectangle raindrop = new Rectangle();
+        raindrop.y = MathUtils.random(500, 500);
+        raindrop.x = MathUtils.random(20, 780);
+        raindrop.width = 25;
+        raindrop.height = 64;
+        raindrops.add(raindrop);
+        lastDropTime = TimeUtils.nanoTime();
     }
 
     @Override
@@ -194,10 +208,15 @@ public class level4main extends Game {
                 batch.draw(curentFramesword2, de.x, de.y);
             }
             batch.draw(shield,death.x-8,death.y-1);
+            if(death.x>500){
+                death.x -= 100 * Gdx.graphics.getDeltaTime();
+            }
         }
-        batch.draw(curentFramesword3,300,300);
-
         batch.draw(game.backGround2, -10, 160);
+        for (Rectangle raindrop : raindrops) {
+            batch.draw(curentFramesword3, raindrop.x, raindrop.y);  // Draw current frame at (50, 50)
+        }
+
         batch.end();
 
 
@@ -253,6 +272,53 @@ public class level4main extends Game {
                 }
                 if (game.backGround != game.level4 || game.npc.width != 0 || game.sps == 0 || raindrope.overlaps(game.gun) || raindrope.overlaps(game.bucket) || raindrope.x <= 0 || game.begin == true || raindrope.overlaps(game.bulletrec) || mainenemy1 != mainenemy2 || game.backGround != game.level4) {
                     iter3.remove();
+                }
+            }
+        }
+
+
+
+        if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && death.x>=400) {
+
+                if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(100000000, 1000000000))) {
+                    spawnRaindrop();
+                }
+
+            Iterator<Rectangle> iter = raindrops.iterator();
+            while (iter.hasNext()) {
+                Rectangle raindrope = iter.next();
+                if (game.pause == 0) {
+                    game.pausep = true;
+                }
+                if (game.r == true) {
+                    if (game.pausep == true) {
+                        raindrope.y -= (MathUtils.random(160,160))* Gdx.graphics.getDeltaTime();
+                    }
+                }
+                if (game.pause == 1) {
+                    game.pausep = false;
+                }
+                if (game.r == false) {
+                    if (game.pausep == false) {
+                        raindrope.y -= (MathUtils.random(0, 0)) * Gdx.graphics.getDeltaTime();
+                    }
+                }
+
+                if (raindrope.overlaps(game.bucket)) {
+                    if (game.shieldh == 0) {
+                        if(mainmenu.options == true) {
+                            game.touch.play();
+                        }
+                        game.health = game.health - 1;
+                        game.a = game.a - 1;
+                        setScreen(new hit(game));
+                        super.render();
+                    } else {
+                        game.shieldh--;
+                    }
+                }
+                if (game.death == 0 || game.sps2 == 0 || raindrope.overlaps(game.bucket) || raindrope.x <= 0 || game.begin == true || game.health <= 0) {
+                    iter.remove();
                 }
             }
         }
