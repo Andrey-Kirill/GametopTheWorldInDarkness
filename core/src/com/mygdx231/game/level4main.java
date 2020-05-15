@@ -30,6 +30,8 @@ public class level4main extends Game {
     BitmapFont FontRed1;
     Texture text3;
     Texture rc;
+    Texture shield;
+    Texture fireball;
     int a = 0;
     int b = 0;
     Array<Rectangle> levels3;
@@ -40,9 +42,11 @@ public class level4main extends Game {
     Rectangle death;
     public static final int FRAME_COLS4 = 3, FRAME_ROWS4 = 1 ;
     public static final int FRAME_COLS5 = 3, FRAME_ROWS5 = 1 ;
+    public static final int FRAME_COLS6 = 1, FRAME_ROWS6 = 4 ;
     // Objects used
 
     public Animation<TextureRegion> swordan;
+    public Animation<TextureRegion> swordan3;
 
     // Must declare frame type (TextureRegion)
     // A variable for tracking elapsed time for the animation
@@ -54,7 +58,7 @@ public class level4main extends Game {
     // A variable for tracking elapsed time for the animation
 
     float StateTime5;
-
+    float StateTime6;
 
     level4main(MyGdxGame1 game){
         this.game = game;
@@ -68,6 +72,8 @@ public class level4main extends Game {
         mainenemy2 = new Texture("mainenemy2.png");
         deathanim = new Texture("death4.png");
         deathanim2 = new Texture("death4.1.png");
+        shield = new Texture("shield.png");
+        fireball = new Texture("fireball.png");
         rc = mainenemy1;
         en = new Rectangle();
         en.x = 700;
@@ -82,11 +88,11 @@ public class level4main extends Game {
         levels3 = new Array<Rectangle>();
         spawn3();
 
-         death = new Rectangle();
-         death.x = 700;
-         death.y = 160;
-         death.width = 23;
-         death.height = 98;
+        death = new Rectangle();
+        death.x = 700;
+        death.y = 160;
+        death.width = 23;
+        death.height = 98;
         death4_1 =  new ArrayList<>();
         death4_1.add(death);
 
@@ -116,6 +122,18 @@ public class level4main extends Game {
         swordan2 = new Animation<TextureRegion>(0.40f, walkframes5);
         StateTime5 = 0f;
 
+        int index6 = 0;
+        TextureRegion[][] tm6 = TextureRegion.split(fireball
+                ,  fireball .getWidth() / FRAME_COLS6,
+                fireball .getHeight() / FRAME_ROWS6);
+        TextureRegion[] walkframes6 = new TextureRegion[FRAME_COLS6 * FRAME_ROWS6];
+        for(int i = 0; i < FRAME_ROWS6; i++) {
+            for(int j = 0; j < FRAME_COLS6; j++)
+                walkframes6[index6++] = tm6[i][j];
+        }
+        swordan3 = new Animation<TextureRegion>(0.40f, walkframes6);
+        StateTime6 = 0f;
+
     }
 
     private void spawn3() {
@@ -140,6 +158,10 @@ public class level4main extends Game {
         StateTime5 += Gdx.graphics.getDeltaTime();
 
         TextureRegion curentFramesword2 = swordan2.getKeyFrame(StateTime5, true);
+
+        StateTime6 += Gdx.graphics.getDeltaTime();
+
+        TextureRegion curentFramesword3 = swordan3.getKeyFrame(StateTime6, true);
 
         batch.begin();
 
@@ -171,9 +193,9 @@ public class level4main extends Game {
             for (Rectangle de : death4_1) {
                 batch.draw(curentFramesword2, de.x, de.y);
             }
-
-
+            batch.draw(shield,death.x-8,death.y-1);
         }
+        batch.draw(curentFramesword3,300,300);
 
         batch.draw(game.backGround2, -10, 160);
         batch.end();
