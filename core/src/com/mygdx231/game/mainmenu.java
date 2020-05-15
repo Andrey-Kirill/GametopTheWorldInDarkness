@@ -17,7 +17,7 @@ public class mainmenu extends Game {
     public boolean loading;
     public static boolean options = true;
     public static boolean options2;
-    public int b = 0;
+    public int b = 1;
     public  static  Texture on;
     public  static  Texture off;
     public mainmenu(MyGdxGame1 game) {
