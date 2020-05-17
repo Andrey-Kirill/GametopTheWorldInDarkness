@@ -41,14 +41,17 @@ public class level4main extends Game {
     long lastDropTime;
     public  Texture deathanim;
     public Texture deathanim2;
+    public Texture death4_2;
     Rectangle death;
     public static final int FRAME_COLS4 = 3, FRAME_ROWS4 = 1 ;
     public static final int FRAME_COLS5 = 3, FRAME_ROWS5 = 1 ;
     public static final int FRAME_COLS6 = 1, FRAME_ROWS6 = 2 ;
+    public static final int FRAME_COLS7 = 3, FRAME_ROWS7 = 1 ;
     // Objects used
 
     public Animation<TextureRegion> swordan;
     public Animation<TextureRegion> swordan3;
+    public Animation<TextureRegion> swordan4;
 
     // Must declare frame type (TextureRegion)
     // A variable for tracking elapsed time for the animation
@@ -61,6 +64,7 @@ public class level4main extends Game {
 
     float StateTime5;
     float StateTime6;
+    float StateTime7;
 
     level4main(MyGdxGame1 game){
         this.game = game;
@@ -76,6 +80,7 @@ public class level4main extends Game {
         deathanim2 = new Texture("death4.1.png");
         shield = new Texture("shield.png");
         fireball = new Texture("fireball.png");
+        death4_2 = new Texture("death4.2.png");
         rc = mainenemy1;
         en = new Rectangle();
         en.x = 700;
@@ -138,6 +143,18 @@ public class level4main extends Game {
         swordan3 = new Animation<TextureRegion>(0.21f, walkframes6);
         StateTime6 = 0f;
 
+        int index7 = 0;
+        TextureRegion[][] tm7 = TextureRegion.split(death4_2
+                ,  death4_2.getWidth() / FRAME_COLS7,
+                death4_2.getHeight() / FRAME_ROWS7);
+        TextureRegion[] walkframes7 = new TextureRegion[FRAME_COLS7 * FRAME_ROWS7];
+        for(int i = 0; i < FRAME_ROWS7; i++) {
+            for(int j = 0; j < FRAME_COLS7; j++)
+                walkframes7[index7++] = tm7[i][j];
+        }
+        swordan4 = new Animation<TextureRegion>(0.21f, walkframes7);
+        StateTime7 = 0f;
+
     }
 
     private void spawn3() {
@@ -175,7 +192,11 @@ public class level4main extends Game {
 
         StateTime6 += Gdx.graphics.getDeltaTime();
 
-        TextureRegion curentFramesword3 = swordan3.getKeyFrame(StateTime6, true);
+        TextureRegion curentFramesword3 = swordan3.getKeyFrame(StateTime6,true);
+
+        StateTime7 += Gdx.graphics.getDeltaTime();
+
+        TextureRegion curentFramesword7 = swordan4.getKeyFrame(StateTime7,true);
 
         batch.begin();
 
@@ -203,14 +224,23 @@ public class level4main extends Game {
                 batch.draw(curentFramesword, sp3.x, sp3.y);
             }
         }
+
         if(b>=10) {
+            if(death.x<=500) {
+                curentFramesword2 = curentFramesword7;
+            }
             for (Rectangle de : death4_1) {
                 batch.draw(curentFramesword2, de.x, de.y);
             }
-            batch.draw(shield,death.x-8,death.y-1);
+            if(curentFramesword2 != curentFramesword7) {
+                batch.draw(shield, death.x - 8, death.y - 1);
+            }else{
+                batch.draw(shield, death.x - 2, death.y - 1);
+            }
             if(death.x>500){
                 death.x -= 100 * Gdx.graphics.getDeltaTime();
             }
+
         }
         batch.draw(game.backGround2, -10, 160);
         for (Rectangle raindrop : raindrops) {
@@ -278,7 +308,7 @@ public class level4main extends Game {
 
 
 
-        if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && death.x>=400) {
+        if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && death.x>=400 && curentFramesword2 == curentFramesword7) {
 
                 if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(100000000, 1000000000))) {
                     spawnRaindrop();
