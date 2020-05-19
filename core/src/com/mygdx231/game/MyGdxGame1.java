@@ -38,8 +38,8 @@ public class MyGdxGame1 extends Game {
 	private static final int FRAME_COLS4 = 1, FRAME_ROWS4 = 5;
 	private static final int FRAME_COLS5 = 1, FRAME_ROWS5 = 5;
 	// Objects used
-	Animation<TextureRegion> walkAnimation;
-	Animation<TextureRegion> fireanim;
+	Animation <TextureRegion> walkAnimation;
+	Animation <TextureRegion> fireanim;
 	Animation <TextureRegion> zombieWalk;
 	Animation <TextureRegion> zombie3;
 	Animation <TextureRegion> swordan;
@@ -506,7 +506,7 @@ if(begin==false) {
 	StateTime3 += Gdx.graphics.getDeltaTime();
 	StateTime4 += Gdx.graphics.getDeltaTime();
 	StateTime5 += Gdx.graphics.getDeltaTime();
-	
+
 	TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 	TextureRegion currentFramefire = fireanim.getKeyFrame(stateTime1, true);
 	TextureRegion curentFramezombie = zombieWalk.getKeyFrame(StateTime2, true);
