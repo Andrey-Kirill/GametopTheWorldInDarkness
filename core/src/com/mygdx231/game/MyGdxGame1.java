@@ -496,7 +496,7 @@ public class MyGdxGame1 extends Game {
 
 if(begin==false) {
 
-	bucket = new Rectangle(position.x,position.y,bucketImage.getWidth()-5,bucketImage.getHeight()-10);
+	bucket = new Rectangle(position.x,position.y,bucketImage.getWidth()-14,bucketImage.getHeight()-40);
 	bucket.setPosition(x,y);
 	nameplace2.set(200,170,nameplace.getHeight(),nameplace.getHeight());
 
