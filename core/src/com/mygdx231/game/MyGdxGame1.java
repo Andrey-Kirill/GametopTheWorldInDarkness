@@ -506,7 +506,7 @@ if(begin==false) {
 	StateTime3 += Gdx.graphics.getDeltaTime();
 	StateTime4 += Gdx.graphics.getDeltaTime();
 	StateTime5 += Gdx.graphics.getDeltaTime();
-
+	
 	TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
 	TextureRegion currentFramefire = fireanim.getKeyFrame(stateTime1, true);
 	TextureRegion curentFramezombie = zombieWalk.getKeyFrame(StateTime2, true);
