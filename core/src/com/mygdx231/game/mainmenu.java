@@ -55,12 +55,14 @@ public class mainmenu extends Game {
                     game.buttons.play();
                 }
                 loading=true;
+                game.sps4 = false;
                 Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
                         game.begin = false;
                         game.pause = 0;
                         loading=false;
+                        game.sps4 = true;
                     }
                 }, 3);
             }

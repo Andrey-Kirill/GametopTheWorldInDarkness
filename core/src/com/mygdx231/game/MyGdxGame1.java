@@ -106,6 +106,8 @@ public class MyGdxGame1 extends Game {
 	public Texture tree;
 	public Texture option;
 	public Rectangle bucket;
+	public Texture l3;
+	public Texture r3;
 	Rectangle gun;
 	Rectangle leftbut;
 	Rectangle right;
@@ -173,7 +175,7 @@ public class MyGdxGame1 extends Game {
 	public boolean instr;
 	public boolean gr = true;
 	private GameStateManager gsm;
-	public float x = 600;
+	public float x = 510;
 	public float y = 170;
 	public boolean pos = false;
 	public  Bird br;
@@ -182,6 +184,7 @@ public class MyGdxGame1 extends Game {
 	public boolean chest2 = true;
 	int c = 0;
 	boolean put;
+	public boolean sps4;
 
 	@Override
 	public void create () {
@@ -261,6 +264,8 @@ public class MyGdxGame1 extends Game {
 		tree = new Texture("tree.png");
 		option = new Texture("bth.jpg");
 		spawn = backGround;
+		l3 = characterleft;
+		r3 = bucketImage;
 
 		gun = new Rectangle();
 		gun.width = 49;
@@ -310,7 +315,9 @@ public class MyGdxGame1 extends Game {
 
 
 		raindrops = new Array<Rectangle>();
-		spawnRaindrop();
+		if(mm.loading == false) {
+			spawnRaindrop();
+		}
 		levels2 = new Array<Rectangle>();
 		spawn2();
 		levels3 = new Array<Rectangle>();
@@ -494,7 +501,7 @@ public class MyGdxGame1 extends Game {
 		batch.setProjectionMatrix(camera.combined);
         lvl4.render();
 
-if(begin==false) {
+if(begin==false && sps4 == true && mm.loading == false) {
 
 	bucket = new Rectangle(position.x,position.y,bucketImage.getWidth()-14,bucketImage.getHeight()-40);
 	bucket.setPosition(x,y);
@@ -725,6 +732,7 @@ if(begin==false) {
 		stairs4.y = 210;
 		stairs4.width = 32;
 		stairs4.height = 457;
+		batch.draw(obstacles3.warning,130,166);
 		batch.draw(stairs, stairs4.x, stairs4.y);
 		batch.draw(cemetery5, cemetery1.x, cemetery1.y);
 		batch.draw(cemetery4, cemetery1.x + 45 + 46, cemetery1.y);
@@ -931,7 +939,7 @@ if(begin==false) {
 // Первый уровень...............................................................................................................................
 	// отрисовка противников для первого уровня
 	if((instr==false && pause == 0) &&  r==true && (c == 0 || put == false)) {
-		if (backGround == spawn) {
+		if (backGround == spawn && mm.loading == false) {
 			if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(1000000000, 1000000000))) {
 				spawnRaindrop();
 			}

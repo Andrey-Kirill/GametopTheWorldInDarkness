@@ -347,7 +347,7 @@ public class level4main extends Game {
                         game.shieldh--;
                     }
                 }
-                if (game.death == 0 || game.sps2 == 0 || raindrope.overlaps(game.bucket) || raindrope.x <= 0 || game.begin == true || game.health <= 0) {
+                if (game.death == 0 || game.sps2 == 0 || raindrope.overlaps(game.bucket) || raindrope.x <= 0 || game.begin == true || game.health <= 0 || raindrope.y < -70 ) {
                     iter.remove();
                 }
             }
