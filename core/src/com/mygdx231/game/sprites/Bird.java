@@ -13,9 +13,7 @@ import com.mygdx231.game.obstacles;
 import com.mygdx231.game.states.PlayState;
 
 
-/**
- * Created by Vitaly on 06.11.2015.
- */
+
 public class Bird extends Game {
     public static final int GRAVITY = -15;
     public  static Vector3 position;
