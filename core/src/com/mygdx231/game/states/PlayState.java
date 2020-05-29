@@ -11,9 +11,7 @@ import com.mygdx231.game.MyGdxGame1;
 import com.mygdx231.game.obstacles;
 import com.mygdx231.game.sprites.Bird;
 
-/**
- * Created by Vitaly on 06.11.2015.
- */
+
 public class PlayState extends State {
 
     private Bird bird;
