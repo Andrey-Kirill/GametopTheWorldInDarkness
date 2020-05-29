@@ -13,9 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx231.game.MyGdxGame1;
 
-/**
- * Created by Cartish on 10.10.2016.
- */
+
 
 public class Buttons extends Stage {
     final MyGdxGame1 game;
