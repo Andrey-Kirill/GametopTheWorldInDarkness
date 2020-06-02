@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Timer;
+import com.mygdx231.game.sprites.Bird;
 
 public class inventory extends Game {
     final MyGdxGame1 game;
@@ -25,23 +26,28 @@ public class inventory extends Game {
     Texture bow;
     Texture keyse;
     Texture keyse2;
+    public  Texture potionj;
     OrthographicCamera camera;
     public Vector3 touchPos7;
     boolean b1 = true;
     boolean b2 =true;
     boolean b3 =true;
-    public int b = 0;
+    public static boolean b4 = true;
+    public static int b = 0;
     public String potion;
     static BitmapFont FontRed1;
     public String potion2;
     public String v1;
     public String shield;
+    public String potionjj;
     public String arrows;
     Sound drink;
     public static int k1 = 0;
     public String k1_1;
     public static int k2 = 0;
     public String k1_2;
+    public static int velosity = 0;
+
 
     public inventory(final MyGdxGame1 myGdxGame) { game = myGdxGame; }
 
@@ -52,6 +58,7 @@ public class inventory extends Game {
 
         FontRed1 = new BitmapFont(Gdx.files.internal("arial-15.fnt"));
         FontRed1.setColor(Color.WHITE);
+
 
         batch = new SpriteBatch();
         icontop = new Texture("icontop.png");
@@ -64,6 +71,7 @@ public class inventory extends Game {
         bow = new Texture("icon3.png");
         keyse = new Texture("keyse.png");
         keyse2 = new Texture("keyse2.png");
+        potionj = new Texture("potionj.png");
         drink = Gdx.audio.newSound(Gdx.files.internal("drink.wav"));
 
     }
@@ -74,6 +82,7 @@ public class inventory extends Game {
         potion2 = Integer.toString(game.potions);
         shield = Integer.toString(game.shield);
         v1 = Integer.toString(game.v);
+        potionjj = Integer.toString(velosity);
         arrows = Integer.toString(game.amount);
         k1_1 = Integer.toString(k1);
         k1_2 = Integer.toString(k2);
@@ -161,6 +170,19 @@ public class inventory extends Game {
                     game.shield--;
                     game.shieldh++;
                 }
+                if ((game.touchPos6.x >= 164 && game.touchPos6.x <= 214) && (game.touchPos6.y >= 288 && game.touchPos6.y <= 348) && (velosity > 0) && (velosity <= 4) && b4 == true) {
+                    if(mainmenu.options == true) {
+                        drink.play();
+                    }
+                   velosity--;
+                    b4 = false;
+                    Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
+                        @Override
+                        public void run() {
+                          b4 = true;
+                        }
+                    },10);
+                }
             }
             if (game.v > 5 || game.potionh > 0) {
                 FontRed1.draw(batch, potion, 48, 341);
@@ -173,6 +195,10 @@ public class inventory extends Game {
             if (game.shield > 0) {
                 FontRed1.draw(batch, shield, 152, 341);
                 batch.draw(potionshield, 128, 299);
+            }
+            if (velosity>0) {
+                FontRed1.draw(batch, potionjj, 204, 341);
+                batch.draw(potionj, 175.5F, 299);
             }
 
             if (Gdx.input.justTouched()) {
@@ -187,6 +213,7 @@ public class inventory extends Game {
                     game.swordb = false;
                 }
             }
+
 
         } else {
             game.r = true;
@@ -241,6 +268,7 @@ public class inventory extends Game {
             }
         }
         batch.end();
+
     }
 
     @Override

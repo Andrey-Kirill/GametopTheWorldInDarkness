@@ -223,10 +223,14 @@ public class obstacles extends Game {
                         if(mainmenu.options == true) {
                             game.touch.play();
                         }
-                        game.health = game.health - 1;
-                        game.a = game.a - 1;
-                        setScreen(new hit(game));
-                        super.render();
+                        if(game.ar.armoronyou == 1 || game.ar.armoronyou == 2 || game.ar.armoronyou == 3 || game.ar.armoronyou == 4 || game.ar.armoronyou == 5) {
+                            game.ar.armoron();
+                        }else {
+                            game.health--;
+                            game.a--;
+                            setScreen(new hit(game));
+                            super.render();
+                        }
                     } else {
                         game.shieldh--;
                     }

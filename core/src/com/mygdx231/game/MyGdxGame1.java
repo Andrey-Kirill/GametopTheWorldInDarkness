@@ -185,6 +185,11 @@ public class MyGdxGame1 extends Game {
 	int c = 0;
 	boolean put;
 	public boolean sps4;
+	public boolean kill2;
+	public boolean kill3;
+	public armor ar;
+	public int randomarmor = 0;
+	public int randomarmor2 = 0;
 
 	@Override
 	public void create () {
@@ -205,6 +210,8 @@ public class MyGdxGame1 extends Game {
 		lvl4m = new level4main(this);
 		lvl4m.create();
 		gsm = new GameStateManager();
+		ar = new armor(this);
+		ar.create();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
@@ -909,8 +916,8 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	}
 	// the end of draw
 	inv.render();
+    ar.render();
 	mn.render();
-
 
 	if (sps == 0 || sps2 == 0 || sps3 == 0) {
 		nxt.render();
@@ -971,10 +978,16 @@ if(begin==false && sps4 == true && mm.loading == false) {
 					if(mainmenu.options == true) {
 						touch.play();
 					}
-					health = health - 1;
-					a = a - 1;
-					setScreen(new hit(this));
-					super.render();
+					if(ar.armoronyou == 1 ||ar.armoronyou == 2 || ar.armoronyou == 3 ||ar.armoronyou == 4 || ar.armoronyou == 5) {
+						ar.armoron();
+					}else {
+						health--;
+						a--;
+						setScreen(new hit(this));
+						super.render();
+					}
+
+
 				} else {
 					shieldh--;
 				}
@@ -1021,7 +1034,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		}
 		Iterator<Rectangle> iter2 = levels2.iterator();
 		while (iter2.hasNext()) {
-			Rectangle raindrope = iter2.next();
+			 Rectangle  raindrope = iter2.next();
 			if (pause == 0) {
 				pausep = true;
 			}
@@ -1039,19 +1052,26 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				}
 			}
 			if (raindrope.overlaps(bucket)) {
+
 				if (shieldh == 0) {
 					if(mainmenu.options == true) {
 						touch.play();
 					}
-					health = health - 1;
-					a = a - 1;
-					setScreen(new hit(this));
-					super.render();
+					if(ar.armoronyou == 1 ||ar.armoronyou == 2 || ar.armoronyou == 3 ||ar.armoronyou == 4 || ar.armoronyou == 5) {
+						ar.armoron();
+					}else {
+						health--;
+						a--;
+						setScreen(new hit(this));
+						super.render();
+					}
+
 				} else {
 					shieldh--;
 				}
 			}
 			if (raindrope.overlaps(gun)) {
+				randomarmor = MathUtils.random(1, 100);
 				if(mainmenu.options == true) {
 					deaths.play();
 				}
@@ -1114,15 +1134,21 @@ if(begin==false && sps4 == true && mm.loading == false) {
 					if(mainmenu.options == true) {
 						touch.play();
 					}
-					health = health - 1;
-					a = a - 1;
-					setScreen(new hit(this));
-					super.render();
+					if(ar.armoronyou == 1 ||ar.armoronyou == 2 || ar.armoronyou == 3 ||ar.armoronyou == 4 || ar.armoronyou == 5) {
+						ar.armoron();
+					}else {
+						health--;
+						a--;
+						setScreen(new hit(this));
+						super.render();
+					}
+
 				} else {
 					shieldh--;
 				}
 			}
 			if (raindrope.overlaps(gun)) {
+				randomarmor2 = MathUtils.random(1, 100);
 				if(mainmenu.options == true) {
 					deaths.play();
 				}

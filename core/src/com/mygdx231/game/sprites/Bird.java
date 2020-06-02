@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx231.game.MyGdxGame1;
+import com.mygdx231.game.inventory;
 import com.mygdx231.game.obstacles;
 import com.mygdx231.game.states.PlayState;
 
@@ -17,7 +18,7 @@ import com.mygdx231.game.states.PlayState;
 public class Bird extends Game {
     public static final int GRAVITY = -15;
     public  static Vector3 position;
-    public Vector3 velosity;
+    public static Vector3 velosity;
 
     public MyGdxGame1 mn;
 
@@ -92,7 +93,11 @@ public class Bird extends Game {
         }
     }
     public void jump(){
-        velosity.y = 400;
+        if(inventory.b4 == true) {
+            velosity.y = 400;
+        }else{
+            velosity.y = 550;
+        }
 
     }
     public void right(){

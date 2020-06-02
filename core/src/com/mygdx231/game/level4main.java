@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx231.game.menu.hit;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class level4main extends Game {
     MyGdxGame1 game;
@@ -32,7 +33,7 @@ public class level4main extends Game {
     Texture rc;
     Texture shield;
     Texture fireball;
-    int a = 0;
+    Texture bossheart;
     int b = 0;
     Array<Rectangle> levels3;
     ArrayList<Rectangle> death4_1;
@@ -43,15 +44,23 @@ public class level4main extends Game {
     public Texture deathanim2;
     public Texture death4_2;
     Rectangle death;
+    ArrayList<Texture> a = new ArrayList<>();
+    public boolean fireballb = false;
+    public boolean over = false;
+    float x = 120;
+    float y = 400;
+    int i = 0;
     public static final int FRAME_COLS4 = 3, FRAME_ROWS4 = 1 ;
     public static final int FRAME_COLS5 = 3, FRAME_ROWS5 = 1 ;
     public static final int FRAME_COLS6 = 1, FRAME_ROWS6 = 2 ;
     public static final int FRAME_COLS7 = 3, FRAME_ROWS7 = 1 ;
+    public static final int FRAME_COLS8 = 3, FRAME_ROWS8 = 1 ;
     // Objects used
 
     public Animation<TextureRegion> swordan;
     public Animation<TextureRegion> swordan3;
     public Animation<TextureRegion> swordan4;
+    public Animation<TextureRegion> swordan5;
 
     // Must declare frame type (TextureRegion)
     // A variable for tracking elapsed time for the animation
@@ -65,6 +74,7 @@ public class level4main extends Game {
     float StateTime5;
     float StateTime6;
     float StateTime7;
+    float StateTime8;
 
     level4main(MyGdxGame1 game){
         this.game = game;
@@ -81,6 +91,7 @@ public class level4main extends Game {
         shield = new Texture("shield.png");
         fireball = new Texture("fireball.png");
         death4_2 = new Texture("death4.2.png");
+        bossheart = new Texture("bossheart.png");
         rc = mainenemy1;
         en = new Rectangle();
         en.x = 700;
@@ -95,6 +106,7 @@ public class level4main extends Game {
         levels3 = new Array<Rectangle>();
         spawn3();
 
+        a.add(shield);
         death = new Rectangle();
         death.x = 700;
         death.y = 160;
@@ -155,6 +167,18 @@ public class level4main extends Game {
         swordan4 = new Animation<TextureRegion>(0.21f, walkframes7);
         StateTime7 = 0f;
 
+        int index8 = 0;
+        TextureRegion[][] tm8 = TextureRegion.split(deathanim2
+                ,  deathanim2.getWidth() / FRAME_COLS8,
+                deathanim2.getHeight() / FRAME_ROWS8);
+        TextureRegion[] walkframes8 = new TextureRegion[FRAME_COLS8 * FRAME_ROWS8];
+        for(int i = 0; i < FRAME_ROWS8; i++) {
+            for(int j = 0; j < FRAME_COLS8; j++)
+                walkframes8[index8++] = tm8[i][j];
+        }
+        swordan5 = new Animation<TextureRegion>(0.21f, walkframes8);
+        StateTime8 = 0f;
+
     }
 
     private void spawn3() {
@@ -198,6 +222,10 @@ public class level4main extends Game {
 
         TextureRegion curentFramesword7 = swordan4.getKeyFrame(StateTime7,true);
 
+        StateTime8 += Gdx.graphics.getDeltaTime();
+
+        TextureRegion curentFramesword8 = swordan5.getKeyFrame(StateTime8,true);
+
         batch.begin();
 
             for (Rectangle er : ena) {
@@ -226,23 +254,51 @@ public class level4main extends Game {
         }
 
         if(b>=10) {
-            if(death.x<=500) {
+            if (death.x <= 500) {
                 curentFramesword2 = curentFramesword7;
+                Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
+                    @Override
+                    public void run() {
+                        fireballb = true;
+                    }
+                }, 15);
             }
-            for (Rectangle de : death4_1) {
-                batch.draw(curentFramesword2, de.x, de.y);
+            if(fireballb == false) {
+                for (Rectangle de : death4_1) {
+                    batch.draw(curentFramesword2, de.x, de.y);
+                }
             }
-            if(curentFramesword2 != curentFramesword7) {
-                batch.draw(shield, death.x - 8, death.y - 1);
-            }else{
-                batch.draw(shield, death.x - 2, death.y - 1);
+            if (curentFramesword2 != curentFramesword7) {
+                for (Texture a : a) {
+                    batch.draw(a, death.x - 8, death.y - 1);
+                }
+            } else {
+                for (Texture r : a) {
+                    batch.draw(r, death.x - 2, death.y - 1);
+                }
             }
-            if(death.x>500){
+            if (death.x > 500) {
                 death.x -= 100 * Gdx.graphics.getDeltaTime();
             }
-
         }
+          if(fireballb == true){
+              if(game.gun.overlaps(death)){
+                  death4_1.remove(death);
+                  death.height = 0;
+                  death.width = 0;
+              }if(game.bucket.overlaps(death)){
+                  game.health--;
+                  game.a--;
+              }
+              for (Rectangle de : death4_1) {
+                  batch.draw(curentFramesword8, de.x, de.y);
+              }
+              if(game.backGround == game.level4){
+                  death.x -= 50 * Gdx.graphics.getDeltaTime();
+              }
+          }
         batch.draw(game.backGround2, -10, 160);
+
         for (Rectangle raindrop : raindrops) {
             batch.draw(curentFramesword3, raindrop.x, raindrop.y);  // Draw current frame at (50, 50)
         }
@@ -280,14 +336,23 @@ public class level4main extends Game {
                     if(mainmenu.options == true) {
                         game.touch.play();
                     }
-                        game.health = game.health - 2;
-                        game.a = game.a - 2;
+                    if(game.ar.armoronyou == 1 || game.ar.armoronyou == 2 || game.ar.armoronyou == 3 || game.ar.armoronyou == 4 || game.ar.armoronyou == 5) {
+                        game.ar.armoron();
+                    }else {
+                        game.health--;
+                        game.a--;
                         setScreen(new hit(game));
                         super.render();
+                    }
+
                 }
                 if (raindrope.overlaps(game.gun)) {
                     if(mainmenu.options == true) {
                         game.deaths.play();
+                    }
+                    int i = MathUtils.random(1, 5);;
+                    if(i == 5){
+                        inventory.velosity++;
                     }
                     b++;
                     game.coins = game.coins + 1;
@@ -308,9 +373,9 @@ public class level4main extends Game {
 
 
 
-        if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && death.x>=400 && curentFramesword2 == curentFramesword7) {
+        if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && curentFramesword2 == curentFramesword7) {
 
-                if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(100000000, 1000000000))) {
+                if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(100000000, 1000000000)) && fireballb == false) {
                     spawnRaindrop();
                 }
 
@@ -339,10 +404,14 @@ public class level4main extends Game {
                         if(mainmenu.options == true) {
                             game.touch.play();
                         }
-                        game.health = game.health - 1;
-                        game.a = game.a - 1;
-                        setScreen(new hit(game));
-                        super.render();
+                        if(game.ar.armoronyou == 1 || game.ar.armoronyou == 2 || game.ar.armoronyou == 3 || game.ar.armoronyou == 4 || game.ar.armoronyou == 5) {
+                            game.ar.armoron();
+                        }else {
+                            game.health--;
+                            game.a--;
+                            setScreen(new hit(game));
+                            super.render();
+                        }
                     } else {
                         game.shieldh--;
                     }
@@ -352,7 +421,10 @@ public class level4main extends Game {
                 }
             }
         }
+        if(fireballb == true){
+            a.remove(shield);
 
+        }
     }
 
     @Override
