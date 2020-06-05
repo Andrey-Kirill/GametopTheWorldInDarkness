@@ -194,6 +194,7 @@ public class obstacles extends Game {
         }
 
         batch.end();
+        // летающие противники для 2 уровня
         if((game.instr==false && game.pause == 0) && game.r==true) {
 
                 if (TimeUtils.nanoTime() - lastDropTime3 > (MathUtils.random(1000000000, 1000000000))) {

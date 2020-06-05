@@ -36,6 +36,7 @@ public class PlayState extends State {
             mn.camera.unproject(mn.touchPos6);
 
             if ((mn.touchPos6.x >= 560 && mn.touchPos6.x <= 600) && (mn.touchPos6.y >= 100 && mn.touchPos6.y <= 140) && mn.pause == 0 && mn.r == true) {
+                // отработка прыжков
 
                 if (mn.y <= 170) {
                     bird.jump();
@@ -60,6 +61,7 @@ public class PlayState extends State {
             // if program caught touch on screen
             mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
             mn.camera.unproject(mn.touchPos6);
+            // управление персонажем по оси x
             if ((mn.touchPos6.x >= 60 && mn.touchPos6.x <= 110) && (mn.touchPos6.y >= 70 && mn.touchPos6.y <= 120) && mn.pause == 0 && mn.r == true) {
                 bird.left();
             }
@@ -78,7 +80,7 @@ public class PlayState extends State {
                     if (Gdx.input.isTouched()) {
                         mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания
                         mn.camera.unproject(mn.touchPos6);
-
+                        // подъем и спуск персонажа по лестнице
                             if ((mn.touchPos6.x >= 560 && mn.touchPos6.x <= 600) && (mn.touchPos6.y >= 105 && mn.touchPos6.y <= 145) && Bird.position.y < 580 ) {  // если оно зафиксирвано  зоне кнопки входа то меняем фон на фон 4 уровня
                                 bird.up();
                             }

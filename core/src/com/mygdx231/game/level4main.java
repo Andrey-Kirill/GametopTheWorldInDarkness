@@ -368,7 +368,7 @@ public class level4main extends Game {
                 iter4.remove();
             }
         }
-
+        // логика противников для 4 уровня при первой стадии босса
         if((game.instr==false && game.pause == 0) && game.r==true && mainenemy1 == mainenemy2 && game.backGround == game.level4) {
 
             if (TimeUtils.nanoTime() - lastDropTime3 > (MathUtils.random(1000000000, 1000000000)) && b<11) {
@@ -433,7 +433,7 @@ public class level4main extends Game {
         }
 
 
-
+        //логика fireball для 4 уровня при второй стадии босса
         if((game.instr==false && game.pause == 0) &&  game.r==true && b>=10 && curentFramesword2 == curentFramesword7) {
 
                 if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(100000000, 1000000000)) && fireballb == false) {

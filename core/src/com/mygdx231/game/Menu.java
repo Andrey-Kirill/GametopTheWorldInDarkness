@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
-
+// класс для логики и отрисовки  меню паузы
 public class Menu extends Game {
     final MyGdxGame1 game;
     SpriteBatch batch;

@@ -197,6 +197,9 @@ public class MyGdxGame1 extends Game {
 
 	@Override
 	public void create () {
+		/*
+		Импортирование метода create всез нужных классов
+		 */
 		nxt = new nextlevel(this);
 		nxt.create();
 		mn = new Menu(this);
@@ -216,6 +219,8 @@ public class MyGdxGame1 extends Game {
 		gsm = new GameStateManager();
 		ar = new armor(this);
 		ar.create();
+
+
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
@@ -344,7 +349,9 @@ public class MyGdxGame1 extends Game {
 
 		gsm.set(new PlayState(gsm,this,ob));
 
-        //анимация зомби
+
+	// Анимация
+
 		walkSheet = new Texture(Gdx.files.internal("zombie.png"));
 		TextureRegion[][] tmp = TextureRegion.split(walkSheet,
 				walkSheet.getWidth() / FRAME_COLS,
@@ -711,7 +718,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		bucketf.y = 480;
 		fire = level2;
 		//NPC.............................................................................................
-		// отрисовка и обработка npc
+		// отрисовка и обработка npc на втором уровне
 		batch.draw(npcleft, npc.x, npc.y);
 		if (npc.overlaps(bucket)) {
 			batch.draw(text, 310, 405);
@@ -799,6 +806,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		FontRed1.draw(batch, "You must back this place to bright time", 372, 433);
 	}
     if(backGround == level4) {
+    	//Отрисовка элементов 4 уровня которые должны быть позади главного персонажа
 		batch.draw(lvl4.curentFramesword, 418, 245);
 		batch.draw(lvl4.curentFramesword,414,215);
 		batch.draw(lvl4.curentFramesword,146,233);
@@ -836,7 +844,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	if (turn == false) {
 		batch.draw(characterleft, x, y);
 	}
-
+ //Отрисовка оружия
 	if (turn == true) {
 		if (Gdx.input.isTouched()) {
 			// обработка касаний для движения
@@ -889,6 +897,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				batch.draw(bowleft, bucket.x-6, bucket.y + 7);
 			}
         }
+		// конец отрисовки оружия
 	// manage buttons
 	if (r == true) {
 		if (pause == 0) {
@@ -941,6 +950,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
     }
 	gsm.update(Gdx.graphics.getDeltaTime());
 	batch.end();
+	// Импортирование метода render() из нужных классов
 	gsm.render(batch);
 	if (backGround == level2) {
 		ob.render();
@@ -973,7 +983,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	if (x > 800 - 64) {
 		x = 800 - 64;
 	}
-
+ //отрисовка полета стрелы
 	if((bulletrec.x>800 || kill==true || bulletrec.x<0) && amount>0 && bowb==true){
 		if(kill==true) {
 			kill = false;
@@ -984,6 +994,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		bullet = bullets[i];
 		i++;
 	}
+	// конец отрисовки полета стрелы
 // Первый уровень...............................................................................................................................
 	// отрисовка противников для первого уровня
 	if((instr==false && pause == 0) &&  r==true && (c == 0 || put == false)) {
@@ -1269,7 +1280,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		 batch.end();
 	 }
  }
-
+// выход из игры
  if(exit==true){
 	 System.exit(0);
  }

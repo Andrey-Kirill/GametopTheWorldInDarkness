@@ -92,6 +92,7 @@ public class Bird extends Game {
             }
         }
     }
+    // метод осуществляющий прыжок
     public void jump(){
         if(inventory.b4 == true) {
             velosity.y = 400;
@@ -100,6 +101,7 @@ public class Bird extends Game {
         }
 
     }
+    // методы управления главным персонажем
     public void right(){
         position.x += mn.speed * Gdx.graphics.getDeltaTime();
     }

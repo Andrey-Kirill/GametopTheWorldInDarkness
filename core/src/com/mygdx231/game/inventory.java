@@ -102,6 +102,7 @@ public class inventory extends Game {
                     b = 1;
             }
         }
+        // логика действий при открытом инвентаре
         if (b == 1) {
             game.r = false;
             batch.draw(keyse,610, 442);

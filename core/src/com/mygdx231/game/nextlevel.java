@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-
+// отрисовка анимаций при переходе между уровнями
 public class nextlevel extends Game {
     final MyGdxGame1 game;
     Texture nextlevelpicture;

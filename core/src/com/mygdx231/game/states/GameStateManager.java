@@ -12,7 +12,7 @@ public class GameStateManager {
     public GameStateManager(){
         states = new Stack<State>();
     }
-
+ // метод для постановки главного персонажа
     public void set(State state){
         states.push(state);
     }

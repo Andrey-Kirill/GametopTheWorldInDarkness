@@ -98,7 +98,7 @@ public class armor extends Game{
             }
         }
 
-        if (Gdx.input.justTouched()) {//здесь производится выбор брони(PS здесь может быть неточные данные и этот PS нужно будет удалить)
+        if (Gdx.input.justTouched()) {//здесь производится выбор брони
             game.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             game.camera.unproject(game.touchPos6);
             if ((game.touchPos6.x >= 15 && game.touchPos6.x <= 65) && (game.touchPos6.y >= 412 && game.touchPos6.y <= 472)) {
@@ -127,7 +127,7 @@ public class armor extends Game{
                 }
             }
         }
-        //отсюда этот кусок нужно убрать и вставить в overlaps игрока и противника в часть если щитов нет
+
 
     }
 public  void armoron() {
