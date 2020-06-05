@@ -170,7 +170,7 @@ public class inventory extends Game {
                     game.shield--;
                     game.shieldh++;
                 }
-                if ((game.touchPos6.x >= 164 && game.touchPos6.x <= 214) && (game.touchPos6.y >= 288 && game.touchPos6.y <= 348) && (velosity > 0) && (velosity <= 4) && b4 == true) {
+                if ((game.touchPos6.x >= 164 && game.touchPos6.x <= 214) && (game.touchPos6.y >= 288 && game.touchPos6.y <= 348) && (velosity > 0) && (velosity <= 6) && b4 == true) {
                     if(mainmenu.options == true) {
                         drink.play();
                     }
@@ -213,7 +213,6 @@ public class inventory extends Game {
                     game.swordb = false;
                 }
             }
-
 
         } else {
             game.r = true;

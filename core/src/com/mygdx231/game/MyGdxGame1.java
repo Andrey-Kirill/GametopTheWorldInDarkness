@@ -108,6 +108,7 @@ public class MyGdxGame1 extends Game {
 	public Rectangle bucket;
 	public Texture l3;
 	public Texture r3;
+	public Texture village;
 	Rectangle gun;
 	Rectangle leftbut;
 	Rectangle right;
@@ -120,6 +121,7 @@ public class MyGdxGame1 extends Game {
 	public Rectangle stairs4;
 	Rectangle bulletrec;
 	Rectangle nameplace2;
+	public Rectangle door3;
 	Vector3 touchPos;
 	Vector3 touchPos1;
 	Vector3 touchPos2;
@@ -190,6 +192,8 @@ public class MyGdxGame1 extends Game {
 	public armor ar;
 	public int randomarmor = 0;
 	public int randomarmor2 = 0;
+	public int sps5 = 1;
+	float yb = 0;
 
 	@Override
 	public void create () {
@@ -270,6 +274,7 @@ public class MyGdxGame1 extends Game {
 		level4 = new Texture("level4.png");
 		tree = new Texture("tree.png");
 		option = new Texture("bth.jpg");
+        village = new Texture("village.png");
 		spawn = backGround;
 		l3 = characterleft;
 		r3 = bucketImage;
@@ -319,7 +324,11 @@ public class MyGdxGame1 extends Game {
         position.x = x;
         position.y = y;
 		nameplace2 = new Rectangle();
-
+		door3 = new Rectangle();
+		door3.x = 700;
+		door3.y = 170;
+        door3.height = door.getHeight();
+        door3.width = door.getWidth();
 
 		raindrops = new Array<Rectangle>();
 		if(mm.loading == false) {
@@ -530,10 +539,10 @@ if(begin==false && sps4 == true && mm.loading == false) {
 
 
 	batch.begin();
-	batch.draw(backGround, 0, 0); // BackGround
+	batch.draw(backGround, 0, yb); // BackGround
 	batch.draw(backGround1, 0, 0); // land
 	batch.draw(currentFramefire, bucketf.x + 35, bucketf.y - 15);
-	if(backGround != level4) {
+	if(backGround != level4 && backGround!= village) {
 		batch.draw(door, door1.x, door1.y);
 	}// right door
 	batch.draw(rightImage, right.x, right.y); // right button of manage
@@ -542,7 +551,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	batch.draw(rightImage, right.x, right.y);
 	batch.draw(left, leftbut.x, leftbut.y);
 	batch.draw(attack, 630, 55);
-  if(backGround != level4) {
+  if(backGround != level4 && backGround != village) {
 	  if (door1.overlaps(bucket)) {// if main hero come to door
 		  if (backGround == level2) {
 			  batch.draw(enter, 575, 35);
@@ -567,23 +576,25 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				  }
 			  }
 		  } else {
-			  batch.draw(enter, 575, 35);
-			  if (Gdx.input.justTouched()) { // if program caught touch on screen
-				  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
-				  camera.unproject(touchPos1);
-				  if (coins >= 5) {
-					  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)) {
-						  if (backGround == spawn || backGround == backGround3) {
-							  sps2 = 0;
-							  Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
-								  @Override
-								  public void run() {
-									  sps2 = 1;
-									  backGround = level2;
-								  }
-							  }, delay);
+			  if (backGround != village) {
+				  batch.draw(enter, 575, 35);
+				  if (Gdx.input.justTouched()) { // if program caught touch on screen
+					  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
+					  camera.unproject(touchPos1);
+					  if (coins >= 5) {
+						  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)) {
+							  if (backGround == spawn || backGround == backGround3) {
+								  sps2 = 0;
+								  Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
+									  @Override
+									  public void run() {
+										  sps2 = 1;
+										  backGround = level2;
+									  }
+								  }, delay);
+							  }
+							  coins = coins - 5;// колличество монет уменьшаем на 5
 						  }
-						  coins = coins - 5;// колличество монет уменьшаем на 5
 					  }
 				  }
 			  }
@@ -792,6 +803,32 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		batch.draw(lvl4.curentFramesword,414,215);
 		batch.draw(lvl4.curentFramesword,146,233);
 		batch.draw(lvl4.curentFramesword,645,218);
+        if(lvl4m.end1 == true){
+            batch.draw(door,door3.x,door3.y,door.getWidth(),door.getHeight());
+        }
+        if(bucket.overlaps(door3)){
+			batch.draw(enter, 575, 35);
+			if (Gdx.input.justTouched()) { // регистрируем касание
+				touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания
+				camera.unproject(touchPos1);
+			if((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)){
+				Bird.position.x = 65;
+				backGround = village;
+				sps5 = 0;
+                Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
+                    @Override
+                    public void run() {
+                        sps5 = 1;
+                    }
+                }, 3);
+			}
+		}
+        }
+	}
+    if(backGround == village){
+    	yb = 100;
+	}else{
+    	yb = 0;
 	}
 	if (turn == true) {
 		batch.draw(bucketImage,x,y);
@@ -914,14 +951,18 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	if(backGround == level4){
        lvl4m.render();
 	}
+	if(backGround == village){
+
+	}
 	// the end of draw
 	inv.render();
     ar.render();
 	mn.render();
 
-	if (sps == 0 || sps2 == 0 || sps3 == 0) {
+	if (sps == 0 || sps2 == 0 || sps3 == 0 || sps5 == 0) {
 		nxt.render();
 	}
+
 	// конец отрисовки кол-ва коинов
 	if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) bucket.x -= 200 * Gdx.graphics.getDeltaTime();
 	if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) bucket.x += 200 * Gdx.graphics.getDeltaTime();
@@ -1193,6 +1234,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				if(mainmenu.options == true) {
 					buttons.play();
 				}
+				lvl4m.death.x = 500;
 				health = 7;
 				a = 7;
 				coins = 0;

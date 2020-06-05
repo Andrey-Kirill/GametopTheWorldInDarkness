@@ -17,7 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.mygdx231.game.menu.hit;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class level4main extends Game {
     MyGdxGame1 game;
@@ -40,13 +39,18 @@ public class level4main extends Game {
     Array<Rectangle> raindrops;
     long lastDropTime3;
     long lastDropTime;
+    long lastDropTime2;
     public  Texture deathanim;
     public Texture deathanim2;
     public Texture death4_2;
+    public Texture deathend;
+    public boolean end1;
     Rectangle death;
     ArrayList<Texture> a = new ArrayList<>();
+    ArrayList<Rectangle> tx = new ArrayList<>();
     public boolean fireballb = false;
     public boolean over = false;
+    Texture bullets;
     float x = 120;
     float y = 400;
     int i = 0;
@@ -92,6 +96,8 @@ public class level4main extends Game {
         fireball = new Texture("fireball.png");
         death4_2 = new Texture("death4.2.png");
         bossheart = new Texture("bossheart.png");
+        bullets = new Texture("firebullet.png");
+        deathend = new Texture("mainenemy1.png");
         rc = mainenemy1;
         en = new Rectangle();
         en.x = 700;
@@ -178,7 +184,6 @@ public class level4main extends Game {
         }
         swordan5 = new Animation<TextureRegion>(0.21f, walkframes8);
         StateTime8 = 0f;
-
     }
 
     private void spawn3() {
@@ -201,6 +206,15 @@ public class level4main extends Game {
         lastDropTime = TimeUtils.nanoTime();
     }
 
+    private void bossbullets() {
+        Rectangle bullets = new Rectangle();
+        bullets.y = 208;
+        bullets.x = death.x-7;
+        bullets.width = 25;
+        bullets.height = 64;
+        tx.add(bullets);
+        lastDropTime2 = TimeUtils.nanoTime();
+    }
     @Override
     public void render() {
         camera.update();
@@ -229,7 +243,17 @@ public class level4main extends Game {
         batch.begin();
 
             for (Rectangle er : ena) {
-                batch.draw(mainenemy1, er.x, er.y);
+                if(death.height != -1) {
+                    batch.draw(mainenemy1, er.x, er.y);
+                }else{
+                    batch.draw(deathend, er.x, er.y);
+                }
+                if(death.height == -1){
+                    er.x -=  500 * Gdx.graphics.getDeltaTime();
+                }
+                if(er.x<0){
+                    end1 = true;
+                }
             }
 
         if(mainenemy1 == rc){
@@ -294,9 +318,34 @@ public class level4main extends Game {
                   batch.draw(curentFramesword8, de.x, de.y);
               }
               if(game.backGround == game.level4){
-                  death.x -= 50 * Gdx.graphics.getDeltaTime();
+                  if(game.r == false || game.pause == 1)
+                  death.x -= 0 * Gdx.graphics.getDeltaTime();
+                  else{
+                      death.x -= 50 * Gdx.graphics.getDeltaTime();
+                  }
+              }
+              if (TimeUtils.nanoTime() - lastDropTime2 > (MathUtils.random(1000000000, 1000000000)) &&(game.r == true || game.pause == 1) && death.height>0) {
+                  bossbullets();
+              }
+
+              for(Rectangle r:tx){
+                  batch.draw(bullets,r.x,r.y);
               }
           }
+          if((death.x<0 || death.height == 0) && death.height != -1){
+              batch.draw(text3, 310, 405);
+              FontRed1.draw(batch, "You won this battle", 322, 454);
+              FontRed1.draw(batch, "But you did not win this war", 322, 434);
+              Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
+                  @Override
+                  public void run() {
+                     death.height = -1;
+                     mainenemy1 = deathend;
+                  }
+              }, 6);
+          }
+
+
         batch.draw(game.backGround2, -10, 160);
 
         for (Rectangle raindrop : raindrops) {
@@ -305,8 +354,20 @@ public class level4main extends Game {
 
         batch.end();
 
-
-
+        Iterator<Rectangle> iter4= tx.iterator();
+        while (iter4.hasNext()) {
+            Rectangle r = iter4.next();
+            if (game.r == false || game.pause == 1) {
+                r.x -= 0 * Gdx.graphics.getDeltaTime();
+            } else {
+                r.x -= 200 * Gdx.graphics.getDeltaTime();
+            }
+            if (game.bucket.overlaps(r)) {
+                game.health--;
+                game.a--;
+                iter4.remove();
+            }
+        }
 
         if((game.instr==false && game.pause == 0) && game.r==true && mainenemy1 == mainenemy2 && game.backGround == game.level4) {
 
@@ -350,7 +411,7 @@ public class level4main extends Game {
                     if(mainmenu.options == true) {
                         game.deaths.play();
                     }
-                    int i = MathUtils.random(1, 5);;
+                    int i = MathUtils.random(1, 5);
                     if(i == 5){
                         inventory.velosity++;
                     }
@@ -421,6 +482,8 @@ public class level4main extends Game {
                 }
             }
         }
+
+
         if(fireballb == true){
             a.remove(shield);
 

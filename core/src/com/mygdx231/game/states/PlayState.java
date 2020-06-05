@@ -78,11 +78,11 @@ public class PlayState extends State {
                     if (Gdx.input.isTouched()) {
                         mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания
                         mn.camera.unproject(mn.touchPos6);
-                        if (mn.coins >= 5) {
+
                             if ((mn.touchPos6.x >= 560 && mn.touchPos6.x <= 600) && (mn.touchPos6.y >= 105 && mn.touchPos6.y <= 145) && Bird.position.y < 580 ) {  // если оно зафиксирвано  зоне кнопки входа то меняем фон на фон 4 уровня
                                 bird.up();
                             }
-                        }
+
                         if ((mn.touchPos6.x >= 560 && mn.touchPos6.x <= 600) && (mn.touchPos6.y >= 40 && mn.touchPos6.y <= 80) && Bird.position.y >= 170) {  // если оно зафиксирвано  зоне кнопки входа то меняем фон на фон 4 уровня
                             bird.down();
                         }
