@@ -550,7 +550,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	batch.draw(attack, 640, 55); // attack button
 	batch.draw(rightImage, right.x, right.y);
 	batch.draw(left, leftbut.x, leftbut.y);
-	batch.draw(attack, 630, 55);
+	batch.draw(attack, 640, 55);
   if(backGround != level4 && backGround != village) {
 	  if (door1.overlaps(bucket)) {// if main hero come to door
 		  if (backGround == level2) {
