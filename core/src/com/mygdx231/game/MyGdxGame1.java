@@ -547,7 +547,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	}// right door
 	batch.draw(rightImage, right.x, right.y); // right button of manage
 	batch.draw(left, leftbut.x, leftbut.y); // left button of manage
-	batch.draw(attack, 630, 55); // attack button
+	batch.draw(attack, 640, 55); // attack button
 	batch.draw(rightImage, right.x, right.y);
 	batch.draw(left, leftbut.x, leftbut.y);
 	batch.draw(attack, 630, 55);
@@ -842,7 +842,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 			// обработка касаний для движения
 			touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos1);
-			if ((touchPos1.x >= 630 && touchPos1.x <= 695) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
+			if ((touchPos1.x >= 640 && touchPos1.x <= 705) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
 				if (bowb == true) {
 					if (amount > 0 && bulletb == false) {
 						bulletb = true;
