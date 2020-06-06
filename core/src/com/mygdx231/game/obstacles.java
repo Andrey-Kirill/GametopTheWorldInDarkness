@@ -23,7 +23,7 @@ public class obstacles extends Game {
     SpriteBatch batch;
     Texture obstacle1;
     Texture obstacle11;
-    Texture chestinv;
+    public static Texture chestinv;
     Texture eye;
     public static Texture chestarr;
     public Rectangle ob1;
@@ -174,7 +174,7 @@ public class obstacles extends Game {
 
                     if ((game.touchPos6.x >= 297 && game.touchPos6.x <= 349) && (game.touchPos6.y >= 351 && game.touchPos6.y <= 410) && game.pause == 0 && game.chest == true) {
                           game.chest = false;
-                          game.amount = 10;
+                          game.amount += 10;
                     }
                     if ((game.touchPos6.x >= 349 && game.touchPos6.x <= 401) && (game.touchPos6.y >= 416 && game.touchPos6.y <= 474) && game.pause == 0 && game.chest2 == true) {
                         game.chest2 = false;

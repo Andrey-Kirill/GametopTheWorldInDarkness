@@ -20,13 +20,13 @@ public class inventory extends Game {
     Texture icontop;
     SpriteBatch batch;
     Texture potions;
-    Texture potionshield;
-    Texture potionhelth;
+    public static Texture potionshield;
+    public static Texture potionhelth;
     Texture sword;
     Texture bow;
     Texture keyse;
     Texture keyse2;
-    public  Texture potionj;
+    public static Texture potionj;
     OrthographicCamera camera;
     public Vector3 touchPos7;
     boolean b1 = true;
@@ -259,7 +259,7 @@ public class inventory extends Game {
         if (game.swordb == true) {
             batch.draw(sword, 333, 68);
         }
-        if (game.chest == false && game.amount > 0) {
+        if (game.amount > 0) {
             batch.draw(ob.chestarr, 431, 69);
             if (game.amount >= 10) {
                 FontRed1.draw(batch, arrows, 457, 82);

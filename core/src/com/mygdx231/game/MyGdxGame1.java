@@ -60,6 +60,7 @@ public class MyGdxGame1 extends Game {
 	obstacles3 ob3;
 	level4 lvl4;
 	level4main lvl4m;
+	level5 lvl5;
 	public OrthographicCamera camera;
 	public SpriteBatch batch;
 	Texture zombie;
@@ -76,7 +77,7 @@ public class MyGdxGame1 extends Game {
 	Texture bullet;
 	Texture attack;
 	Texture characterleft;
-    Texture door;
+    public Texture door;
 	Texture enter;
 	Texture level2;
 	Texture spawn;
@@ -109,6 +110,7 @@ public class MyGdxGame1 extends Game {
 	public Texture l3;
 	public Texture r3;
 	public Texture village;
+	Texture maintable;
 	Rectangle gun;
 	Rectangle leftbut;
 	Rectangle right;
@@ -198,7 +200,7 @@ public class MyGdxGame1 extends Game {
 	@Override
 	public void create () {
 		/*
-		Импортирование метода create всез нужных классов
+		Импортирование метода create всех нужных классов
 		 */
 		nxt = new nextlevel(this);
 		nxt.create();
@@ -219,8 +221,8 @@ public class MyGdxGame1 extends Game {
 		gsm = new GameStateManager();
 		ar = new armor(this);
 		ar.create();
-
-
+		lvl5 = new level5(this);
+        lvl5.create();
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 800, 480);
@@ -280,6 +282,7 @@ public class MyGdxGame1 extends Game {
 		tree = new Texture("tree.png");
 		option = new Texture("bth.jpg");
         village = new Texture("village.png");
+        maintable = new Texture("maintableingame.png");
 		spawn = backGround;
 		l3 = characterleft;
 		r3 = bucketImage;
@@ -549,16 +552,16 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	batch.draw(backGround, 0, yb); // BackGround
 	batch.draw(backGround1, 0, 0); // land
 	batch.draw(currentFramefire, bucketf.x + 35, bucketf.y - 15);
-	if(backGround != level4 && backGround!= village) {
+	if(backGround != level4 && backGround!= village && backGround != lvl5.inside) {
 		batch.draw(door, door1.x, door1.y);
 	}// right door
 	batch.draw(rightImage, right.x, right.y); // right button of manage
 	batch.draw(left, leftbut.x, leftbut.y); // left button of manage
-	batch.draw(attack, 640, 55); // attack button
+	batch.draw(attack, 650, 55); // attack button
 	batch.draw(rightImage, right.x, right.y);
 	batch.draw(left, leftbut.x, leftbut.y);
-	batch.draw(attack, 640, 55);
-  if(backGround != level4 && backGround != village) {
+	batch.draw(attack, 650, 55);
+  if(backGround != level4 && backGround != village && backGround != lvl5.inside) {
 	  if (door1.overlaps(bucket)) {// if main hero come to door
 		  if (backGround == level2) {
 			  batch.draw(enter, 575, 35);
@@ -583,7 +586,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				  }
 			  }
 		  } else {
-			  if (backGround != village) {
+			  if (backGround != village ) {
 				  batch.draw(enter, 575, 35);
 				  if (Gdx.input.justTouched()) { // if program caught touch on screen
 					  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
@@ -838,6 +841,22 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	}else{
     	yb = 0;
 	}
+	if(backGround == village){
+		batch.draw(lvl5.door,lvl5.doorr.x,lvl5.doorr.y);
+	}
+	if(backGround == lvl5.inside) {
+		batch.draw(door, lvl5.doorinside.x, lvl5.doorinside.y);
+	}
+	if(backGround == spawn){
+		batch.draw(maintable,39,291);
+	}
+	if(backGround == level2){
+		batch.draw(maintable,40,291);
+		batch.draw(maintable,709,291);
+	}
+	if(backGround == backGround3){
+		batch.draw(maintable,39,291);
+	}
 	if (turn == true) {
 		batch.draw(bucketImage,x,y);
 	}
@@ -850,7 +869,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 			// обработка касаний для движения
 			touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos1);
-			if ((touchPos1.x >= 640 && touchPos1.x <= 705) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
+			if ((touchPos1.x >= 650 && touchPos1.x <= 715) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
 				if (bowb == true) {
 					if (amount > 0 && bulletb == false) {
 						bulletb = true;
@@ -869,10 +888,10 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	}
 		if (turn == false) {
 		if (Gdx.input.isTouched()) {
-			// обработка касаний для движения
+			// обработка касаний для оружий
 			touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos1);
-			if ((touchPos1.x >= 630 && touchPos1.x <= 695) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
+			if ((touchPos1.x >= 650 && touchPos1.x <= 715) && (touchPos1.y >= 55 && touchPos1.y <= 134)) {
 				if(bowb==true) {
 					if(amount > 0 && bulletb == false) {
 						bulletb = true;
@@ -961,9 +980,9 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	if(backGround == level4){
        lvl4m.render();
 	}
-	if(backGround == village){
-
-	}
+    if(backGround == village || backGround == lvl5.inside){
+        lvl5.render();
+    }
 	// the end of draw
 	inv.render();
     ar.render();
@@ -988,6 +1007,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		if(kill==true) {
 			kill = false;
 		}
+
 		bullet.dispose();
 		bulletb = false;
 		bulletrec.x = -2;
@@ -1238,6 +1258,9 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		super.render();
 		bucket.x = 5;
 		bucket.y = 170;
+		if(lvl4m.death.x>0) {
+            lvl4m.death.x = 500;
+        }
 		if (Gdx.input.isTouched()) {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
@@ -1245,7 +1268,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				if(mainmenu.options == true) {
 					buttons.play();
 				}
-				lvl4m.death.x = 500;
+
 				health = 7;
 				a = 7;
 				coins = 0;
