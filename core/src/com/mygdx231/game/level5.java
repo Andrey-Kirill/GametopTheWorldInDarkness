@@ -90,8 +90,10 @@ public class level5 extends Game {
             batch.draw(light, 500, 180);
             batch.draw(trader,traderr.x,traderr.y);
             if(game.bucket.overlaps(traderr)){
-                batch.draw(buttonbuy,590,310);
-                batch.draw(buttonbuy,590,310);
+                if(inventory.b == 1) {
+                    batch.draw(buttonbuy, 297, 295);
+                    batch.draw(buttonbuy, 297, 295);
+                }
                 if(b == 0) {
                     batch.draw(game.text, 365, 405);
                     FontRed1.draw(batch, "You almost killed death but do not chill out", 372, 455);
@@ -101,7 +103,7 @@ public class level5 extends Game {
                     game.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
                     game.camera.unproject(game.touchPos6);
 
-                    if ((game.touchPos6.x >= 590 && game.touchPos6.x <= 640) && (game.touchPos6.y >= 310 && game.touchPos6.y <= 360) && game.pause == 0) {
+                    if ((game.touchPos6.x >= 297 && game.touchPos6.x <= 347) && (game.touchPos6.y >= 295 && game.touchPos6.y <= 360) && game.pause == 0) {
                         if (b == 1) {
                             b = 0;
                         } else
