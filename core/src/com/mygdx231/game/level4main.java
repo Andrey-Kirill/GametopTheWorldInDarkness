@@ -258,8 +258,13 @@ public class level4main extends Game {
 
         if(mainenemy1 == rc){
             batch.draw(text3, 310, 405);
-            FontRed1.draw(batch, "You disturb me,you will never leave alive", 322, 454);
-            FontRed1.draw(batch, "I will kill you", 322, 434);
+            if(mainmenu.language == false) {
+                MyGdxGame1.FontRed1.draw(batch, "You disturb me,you will never leave alive", 322, 454);
+                MyGdxGame1.FontRed1.draw(batch, "I will kill you", 322, 434);
+            }else{
+                MyGdxGame1.FontRed1.draw(batch, "Ты потревожил меня,ты не останешься в живых", 322, 454);
+                MyGdxGame1.FontRed1.draw(batch, "Я убью тебя", 322, 434);
+            }
         }
         Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
             @Override
@@ -334,8 +339,13 @@ public class level4main extends Game {
           }
           if((death.x<0 || death.height == 0) && death.height != -1){
               batch.draw(text3, 310, 405);
-              FontRed1.draw(batch, "You won this battle", 322, 454);
-              FontRed1.draw(batch, "But you did not win this war", 322, 434);
+              if(mainmenu.language == false){
+                  FontRed1.draw(batch, "You won this battle", 322, 454);
+                  FontRed1.draw(batch, "But you did not win this war", 322, 434);
+              }else{
+                  MyGdxGame1.FontRed1.draw(batch, "Ты выиграл этот бой", 322, 456);
+                  MyGdxGame1.FontRed1.draw(batch, "Но не выиграл эту войну", 322, 433);
+              }
               Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
                   @Override
                   public void run() {
@@ -483,7 +493,6 @@ public class level4main extends Game {
             }
         }
 
-
         if(fireballb == true){
             a.remove(shield);
 
@@ -492,6 +501,15 @@ public class level4main extends Game {
 
     @Override
     public void dispose() {
-
+     mainenemy1.dispose();
+     mainenemy2.dispose();
+     deathanim.dispose();
+     deathanim2.dispose();
+     shield.dispose();
+     fireball.dispose();
+     death4_2.dispose();
+     bossheart.dispose();
+     bullets.dispose();
+     deathend.dispose();
     }
 }

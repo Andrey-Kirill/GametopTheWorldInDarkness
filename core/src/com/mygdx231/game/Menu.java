@@ -39,7 +39,7 @@ public class Menu extends Game {
         homepage = new Texture("homepage.png");
         pause2 = new Texture("pause2.png");
         instructionbutton = new Texture("instruction.png");
-        instruction = new Texture("instructionforgame.jpg");
+        instruction = new Texture("instructionforgame1.jpg");
         invexit = new Texture("invexit.png");
     }
 

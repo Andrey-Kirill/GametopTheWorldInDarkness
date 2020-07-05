@@ -14,12 +14,21 @@ public class mainmenu extends Game {
     OrthographicCamera camera;
     Texture begin1;
     Texture begin2;
+    Texture begin1rus;
     public boolean loading;
     public static boolean options = true;
     public static boolean options2;
     public int b = 1;
+    public int b1 = 1;
+    public int b2 = 1;
     public  static  Texture on;
     public  static  Texture off;
+    public  static  Texture rus;
+    public static   Texture eng;
+    public  static  Texture x125;
+    public static   Texture x100;
+    public static boolean language = true;
+    public static boolean sizeofbuttons = true;
     public mainmenu(MyGdxGame1 game) {
         this.game = game;
     }
@@ -29,23 +38,25 @@ public class mainmenu extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
-        begin1 = new Texture("begin3.jpg");
-        begin2 = new Texture("begin2.jpg");
+        begin1 = new Texture("begin3.png");
+        begin1rus = new Texture("beginrus3.png");
         on = new Texture("on.png");
         off = new Texture("off.png");
+        rus = new Texture("rus.png");
+        eng = new Texture("eng.png");
+        x125 = new Texture("x125.png");
+        x100 = new Texture("x100.png");
     }
 
     @Override
     public void render() {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        if(game.rand==1) {
+        if(language == false) {
             batch.draw(begin1, 0, 0);
+        }else{
+            batch.draw(begin1rus, 0, 0);
         }
-        if(game.rand==2){
-            batch.draw(begin2,0,0);
-        }
-
         if (Gdx.input.justTouched()) {
             // if program caught touch on screen
             game.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
@@ -66,7 +77,7 @@ public class mainmenu extends Game {
                     }
                 }, 3);
             }
-            if ((game.touchPos6.x >= 536 && game.touchPos6.x <= 718) && (game.touchPos6.y >= 91 && game.touchPos6.y <= 182) && options2 == false) {
+            if ((game.touchPos6.x >= 536 && game.touchPos6.x <= 718) && (game.touchPos6.y >= 91 && game.touchPos6.y <= 182) && options2 == false){
                 game.exit=true;
                 if(options == true) {
                     game.buttons.play();
@@ -84,11 +95,32 @@ public class mainmenu extends Game {
                }
                 options2 = false;
             }
-            if ((game.touchPos6.x >= 246 && game.touchPos6.x <= 318) && (game.touchPos6.y >= 363 && game.touchPos6.y <= 413) && options2 == true) {
+            if ((game.touchPos6.x >= 246 && game.touchPos6.x <= 318) && (game.touchPos6.y >= 363 && game.touchPos6.y <= 413) && options2 == true){
                 if (b == 1) {
                     b = 0;
                 } else
                     b = 1;
+            }
+            if(language == false) {
+                if ((game.touchPos6.x >= 320 && game.touchPos6.x <= 392) && (game.touchPos6.y >= 263 && game.touchPos6.y <= 313) && options2 == true) {
+                    if (b1 == 1) {
+                        b1 = 0;
+                    } else
+                        b1 = 1;
+                }
+            }else{
+                if ((game.touchPos6.x >= 240 && game.touchPos6.x <= 312) && (game.touchPos6.y >= 270 && game.touchPos6.y <= 320) && options2 == true) {
+                    if (b1 == 1) {
+                        b1 = 0;
+                    } else
+                        b1 = 1;
+                }
+            }
+            if ((game.touchPos6.x >= 700 && game.touchPos6.x <= 772) && (game.touchPos6.y >= 363 && game.touchPos6.y <= 413) && options2 == true){
+                if (b2 == 1) {
+                    b2 = 0;
+                } else
+                    b2 = 1;
             }
         }
         if(loading==true){
@@ -101,6 +133,18 @@ public class mainmenu extends Game {
         if(b == 0){
             options = false;
         }
+        if(b1 == 1){
+            language = true;
+        }
+        if(b1 == 0){
+            language = false;
+        }
+        if(b2 == 1){
+            sizeofbuttons = true;
+        }
+        if(b2 == 0){
+            sizeofbuttons = false;
+        }
     }
 
     @Override
@@ -108,5 +152,9 @@ public class mainmenu extends Game {
         batch.dispose();
         begin1.dispose();
         begin2.dispose();
+        on.dispose();
+        off.dispose();
+        rus.dispose();
+        eng.dispose();
     }
 }

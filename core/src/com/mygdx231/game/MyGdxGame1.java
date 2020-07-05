@@ -30,7 +30,6 @@ public class MyGdxGame1 extends Game {
 	// raindrops is enemy or zombies
 	// gun is sword
 	// cemetery is cemetery
-
 	private static final int FRAME_COLS = 3, FRAME_ROWS = 1;
 	private static final int FRAME_COLS1 = 6, FRAME_ROWS1 = 1;
 	private static final int FRAME_COLS2 = 3, FRAME_ROWS2 = 1;
@@ -111,6 +110,15 @@ public class MyGdxGame1 extends Game {
 	public Texture r3;
 	public Texture village;
 	Texture maintable;
+	public Texture leftok;
+	public Texture rightok;
+	public Texture leftsmall;
+	public Texture rightsmall;
+	public Texture upmini;
+	public Texture upoke;
+	public Texture downmini;
+	public Texture downoke;
+	public Texture optionrus;
 	Rectangle gun;
 	Rectangle leftbut;
 	Rectangle right;
@@ -124,6 +132,12 @@ public class MyGdxGame1 extends Game {
 	Rectangle bulletrec;
 	Rectangle nameplace2;
 	public Rectangle door3;
+	public Rectangle left125;
+	public Rectangle right125;
+	public Rectangle upok;
+	public Rectangle upsmall;
+	public Rectangle upnormal;
+	public Rectangle downrec;
 	Vector3 touchPos;
 	Vector3 touchPos1;
 	Vector3 touchPos2;
@@ -140,7 +154,7 @@ public class MyGdxGame1 extends Game {
 	public int health = 7;
 	public int a = 7;
 	public int coins = 0;
-	BitmapFont FontRed1;
+	public static BitmapFont FontRed1;
 	public String coin;
 	float delay = 3;
 	public int death = 1;
@@ -196,6 +210,10 @@ public class MyGdxGame1 extends Game {
 	public int randomarmor2 = 0;
 	public int sps5 = 1;
 	float yb = 0;
+	public static int xup1;
+	public static int xup2;
+	public static int yup1;
+	public static int yup2;
 
 	@Override
 	public void create () {
@@ -245,8 +263,8 @@ public class MyGdxGame1 extends Game {
 		backGround1 = new Texture("drt1.png");
 		backGround2 = new Texture("grd1.png");
 		fire = new Texture(Gdx.files.internal("fire.png"));
-		rightImage = new Texture("right.png");
-		left = new Texture("left.png");
+		rightImage = new Texture("right15x.png");
+		left = new Texture("left15x.png");
 		sword = new Texture("sword.png");
 		heart = new Texture("heart.png");
 		knife  = new Texture("knife1.png");
@@ -267,8 +285,8 @@ public class MyGdxGame1 extends Game {
 		cemetery5 = new Texture("cemetery5.png");
 		shieldhealth = new Texture("shieldhealth.png");
 		stairs = new Texture("stairs.png");
-		up = new Texture("up.png");
-		down = new Texture("down.png");
+		up = new Texture("up125x.png");
+		down = new Texture("down125x.png");
 		knifeleft = new Texture("knifeleft.png");
 		bullet = new Texture("bullet.png");
 		for(int i=0;i<=amount+1000;i++){
@@ -277,15 +295,24 @@ public class MyGdxGame1 extends Game {
 		bow = new Texture("bow.png");
 		bowleft = new Texture("bowleft.png");
 		nameplace = new Texture("nameplace.png");
-		text2 = new Texture("text2.png");
+		text2 = new Texture("text.png");
 		level4 = new Texture("level4.png");
 		tree = new Texture("tree.png");
 		option = new Texture("bth.jpg");
         village = new Texture("village.png");
         maintable = new Texture("maintableingame.png");
+        leftsmall = new Texture("left.png");
+        rightsmall = new Texture("right.png");
+        upmini = new Texture("up.png");
+        downmini = new Texture("down.png");
+        optionrus = new Texture("bthrus.png");
+        rightok = rightImage;
+        leftok = left;
 		spawn = backGround;
 		l3 = characterleft;
 		r3 = bucketImage;
+		upoke = up;
+		downoke = down;
 
 		gun = new Rectangle();
 		gun.width = 49;
@@ -301,9 +328,15 @@ public class MyGdxGame1 extends Game {
 		right = new Rectangle();
 		right.x=155;
 		right.y=70;
+		right125 = new Rectangle();
+		right125.x = 165;
+		right125.y = 60;
 		leftbut = new Rectangle();
 		leftbut.x=60;
 		leftbut.y=70;
+		left125 = new Rectangle();
+		left125.x = 50;
+		left125.y = 60;
 		door1 = new Rectangle();
 		door1.x=30;
 		door1.y=170;
@@ -337,6 +370,18 @@ public class MyGdxGame1 extends Game {
 		door3.y = 170;
         door3.height = door.getHeight();
         door3.width = door.getWidth();
+        upnormal = new Rectangle();
+        upnormal.x = 557;
+        upnormal.y = 104;
+        upsmall = new Rectangle();
+        upsmall.x = 560;
+        upsmall.y = 106;
+        upok = new Rectangle();
+        upok.x = upnormal.x;
+        upok.y = upnormal.y;
+        downrec = new Rectangle();
+        downrec.x = 557;
+        downrec.y = 28;
 
 		raindrops = new Array<Rectangle>();
 		if(mm.loading == false) {
@@ -347,8 +392,8 @@ public class MyGdxGame1 extends Game {
 		levels3 = new Array<Rectangle>();
 		spawn3();
 
-		FontRed1 = new BitmapFont(Gdx.files.internal("arial-15.fnt"));
-		FontRed1.setColor(Color.WHITE); //Red
+		FontRed1 = new BitmapFont(Gdx.files.internal("arial15.fnt"));
+		FontRed1.setColor(Color.WHITE); // White
 
 		gsm.set(new PlayState(gsm,this,ob));
 
@@ -528,6 +573,41 @@ public class MyGdxGame1 extends Game {
         lvl4.render();
 
 if(begin==false && sps4 == true && mm.loading == false) {
+	if(mainmenu.sizeofbuttons == true){
+		leftbut.x = left125.x;
+		leftbut.y = left125.y;
+		right.x = right125.x;
+		right.y = right125.y;
+		rightImage = rightok;
+		left = leftok;
+		upnormal.x = upok.x;
+		upnormal.y = upok.y;
+		up = upoke;
+		xup1 = 557;
+		xup2 = 607;
+		yup1 = 104;
+		yup2 = 154;
+		down = downoke;
+		downrec.x = 557;
+		downrec.y = 28;
+	}else{
+		right.x=155;
+		right.y=70;
+		leftbut.x=60;
+		leftbut.y=70;
+		upnormal.x = upsmall.x;
+		upnormal.y = upsmall.y;
+		rightImage = rightsmall;
+		left = leftsmall;
+		up = upmini;
+		xup1 = 560;
+		xup2 = 600;
+		yup1 = 106;
+		yup2 = 146;
+		down = downmini;
+		downrec.x = 560;
+		downrec.y = 40;
+	}
 
 	bucket = new Rectangle(position.x,position.y,bucketImage.getWidth()-14,bucketImage.getHeight()-40);
 	bucket.setPosition(x,y);
@@ -564,12 +644,12 @@ if(begin==false && sps4 == true && mm.loading == false) {
   if(backGround != level4 && backGround != village && backGround != lvl5.inside) {
 	  if (door1.overlaps(bucket)) {// if main hero come to door
 		  if (backGround == level2) {
-			  batch.draw(enter, 575, 35);
+			  batch.draw(enter, 575, 30);
 			  if (Gdx.input.justTouched()) { // if program caught touch on screen
 				  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
 				  camera.unproject(touchPos1);
 				  if (coins >= 5) {
-					  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)) {  // если касание зафиксировано в зоне кнопки входа в портал
+					  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 30 && touchPos1.y <= 92)) {  // если касание зафиксировано в зоне кнопки входа в портал
 						  if (backGround == level2) {
 							  sps = 0;
 							  Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
@@ -587,12 +667,12 @@ if(begin==false && sps4 == true && mm.loading == false) {
 			  }
 		  } else {
 			  if (backGround != village ) {
-				  batch.draw(enter, 575, 35);
+				  batch.draw(enter, 575, 30);
 				  if (Gdx.input.justTouched()) { // if program caught touch on screen
 					  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
 					  camera.unproject(touchPos1);
 					  if (coins >= 5) {
-						  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)) {
+						  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 30 && touchPos1.y <= 92)) {
 							  if (backGround == spawn || backGround == backGround3) {
 								  sps2 = 0;
 								  Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
@@ -613,12 +693,12 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	  if (npc.width == 0) {
 		  if (backGround == level2) {
 			  if (door2.overlaps(bucket)) {
-				  batch.draw(enter, 575, 35);// рисует кнопку входа
+				  batch.draw(enter, 575, 30);// рисует кнопку входа
 				  if (Gdx.input.justTouched()) { // регистрируем касание
 					  touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания
 					  camera.unproject(touchPos1);
 					  if (coins >= 5) {
-						  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)) { // если оно зафиксирвано  зоне кнопки входа то меняем фон на фон 3 уровня
+						  if ((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 30 && touchPos1.y <= 92)) { // если оно зафиксирвано  зоне кнопки входа то меняем фон на фон 3 уровня
 							  if (backGround == level2) {
 								  sps3 = 0;
 								  backGround = backGround3;
@@ -639,7 +719,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		  }
 	  }
   }
-	batch.draw(up, 560, 105);
+	batch.draw(up, upnormal.x, upnormal.y);
 
 	// дальше  идет код про отнимание и отрисовку жизней
 	if (a == 7) {
@@ -725,8 +805,13 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		batch.draw(npcleft, npc.x, npc.y);
 		if (npc.overlaps(bucket)) {
 			batch.draw(text, 310, 405);
-			FontRed1.draw(batch, "If you want to get a chest you must kill some zombies", 322, 454);
-            FontRed1.draw(batch, "Sorry but i have to go", 322, 434);
+			if(mainmenu.language == false){
+				FontRed1.draw(batch, "If you want to get a chest you must kill some zombies", 322, 454);
+				FontRed1.draw(batch, "Sorry but i have to go", 322, 434);
+			}else{
+            	FontRed1.draw(batch, "Если хочешь добраться до сундука,убивай зомби", 318, 455);
+				FontRed1.draw(batch, "Извини,но мне надо в путь", 318, 433);
+			}
 			Timer.schedule(new Timer.Task() { // задержка и код который должен выполняться после этого времени
 				@Override
 				public void run() {
@@ -805,8 +890,13 @@ if(begin==false && sps4 == true && mm.loading == false) {
 
     if(c==1 && nameplace2.overlaps(bucket) && backGround == spawn ){
 		batch.draw(text2, 365, 405);
-		FontRed1.draw(batch, "Once here everything flourished", 372, 455);
-		FontRed1.draw(batch, "You must back this place to bright time", 372, 433);
+		if(mainmenu.language == false){
+			FontRed1.draw(batch, "Once here everything flourished", 372, 455);
+			FontRed1.draw(batch, "You must back this place to bright time", 372, 433);
+		}else{
+			FontRed1.draw(batch, "Однажды здесь все процветало", 372, 455);
+			FontRed1.draw(batch, "Ты должен вернуть это место в былые времена", 372, 433);
+		}
 	}
     if(backGround == level4) {
     	//Отрисовка элементов 4 уровня которые должны быть позади главного персонажа
@@ -818,11 +908,11 @@ if(begin==false && sps4 == true && mm.loading == false) {
             batch.draw(door,door3.x,door3.y,door.getWidth(),door.getHeight());
         }
         if(bucket.overlaps(door3)){
-			batch.draw(enter, 575, 35);
+			batch.draw(enter, 575, 30);
 			if (Gdx.input.justTouched()) { // регистрируем касание
 				touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания
 				camera.unproject(touchPos1);
-			if((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 35 && touchPos1.y <= 97)){
+			if((touchPos1.x >= 575 && touchPos1.x <= 626) && (touchPos1.y >= 30 && touchPos1.y <= 92)){
 				Bird.position.x = 65;
 				backGround = village;
 				sps5 = 0;
@@ -924,11 +1014,20 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				// обработка касаний для движения
 				touchPos10.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 				camera.unproject(touchPos10);
-				if ((touchPos10.x >= 60 && touchPos10.x <= 110) && (touchPos10.y >= 70 && touchPos10.y <= 120)) {
-					turn = false;
-				}
-				if ((touchPos10.x >= 155 && touchPos10.x <= 205) && (touchPos10.y >= 70 && touchPos10.y <= 120)) {
-					turn = true;
+				if (mainmenu.sizeofbuttons == false) {
+					if ((touchPos10.x >= 60 && touchPos10.x <= 110) && (touchPos10.y >= 70 && touchPos10.y <= 120)) {
+						turn = false;
+					}
+					if ((touchPos10.x >= 155 && touchPos10.x <= 205) && (touchPos10.y >= 70 && touchPos10.y <= 120)) {
+						turn = true;
+					}
+				}else{
+					if ((touchPos10.x >= 50 && touchPos6.x <= 113) && (touchPos6.y >= 60 && touchPos6.y <= 123)) {
+						turn = false;
+					}
+					if ((touchPos6.x >= 165 && touchPos6.x <= 228) && (touchPos6.y >= 60 && touchPos6.y <= 123)) {
+						turn = true;
+					}
 				}
 			}
 		}
@@ -1268,7 +1367,6 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				if(mainmenu.options == true) {
 					buttons.play();
 				}
-
 				health = 7;
 				a = 7;
 				coins = 0;
@@ -1276,7 +1374,6 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				death = 1;
 				returnp = false;
 				pause = 0;
-
 			}
 		}
 	}
@@ -1292,13 +1389,50 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	 mm.render();
 	 if(mainmenu.options2 == true) {
 		 batch.begin();
-		 batch.draw(option,0,0);
-		 batch.draw(Menu.invexit,8,422);
-		 if (mainmenu.options == true) {
-			 batch.draw(mainmenu.on, 246, 363);
+		 if(mainmenu.language == false) {
+			 batch.draw(option, 0, 0);
+		 }else{
+			 batch.draw(optionrus, 0, 0);
 		 }
-		 if (mainmenu.options == false) {
-			 batch.draw(mainmenu.off, 246, 363);
+		 batch.draw(Menu.invexit,8,422);
+		 if(mainmenu.language == false) {
+			 if (mainmenu.options == true) {
+				 batch.draw(mainmenu.on, 246, 363);
+			 }
+			 if (mainmenu.options == false) {
+				 batch.draw(mainmenu.off, 246, 363);
+			 }
+			 if (mainmenu.language == true) {
+				 batch.draw(mainmenu.rus, 320, 263);
+			 }
+			 if (mainmenu.language == false) {
+				 batch.draw(mainmenu.eng, 320, 263);
+			 }
+			 if (mainmenu.sizeofbuttons == true) {
+				 batch.draw(mainmenu.x125, 700, 363);
+			 }
+			 if (mainmenu.sizeofbuttons == false) {
+				 batch.draw(mainmenu.x100, 700, 363);
+			 }
+		 }else{
+			 if (mainmenu.options == true) {
+				 batch.draw(mainmenu.on, 235, 366);
+			 }
+			 if (mainmenu.options == false) {
+				 batch.draw(mainmenu.off, 235, 366);
+			 }
+			 if (mainmenu.language == true) {
+				 batch.draw(mainmenu.rus, 240, 270);
+			 }
+			 if (mainmenu.language == false) {
+				 batch.draw(mainmenu.eng, 240, 270);
+			 }
+			 if (mainmenu.sizeofbuttons == true) {
+				 batch.draw(mainmenu.x125, 708, 366);
+			 }
+			 if (mainmenu.sizeofbuttons == false) {
+				 batch.draw(mainmenu.x100, 708, 366);
+			 }
 		 }
 		 batch.end();
 	 }

@@ -136,7 +136,7 @@ public class inventory extends Game {
                                         game.health += 1;
                                         b1 = true;
                                     }
-                                }, 3);
+                                }, 0.1F);
 
                             }
                         }
@@ -241,7 +241,7 @@ public class inventory extends Game {
                                 game.health += 1;
                                 b2 = true;
                             }
-                        }, 3);
+                        }, 0.1F);
                     }
                 }
             }
@@ -268,7 +268,6 @@ public class inventory extends Game {
             }
         }
         batch.end();
-
     }
 
     @Override

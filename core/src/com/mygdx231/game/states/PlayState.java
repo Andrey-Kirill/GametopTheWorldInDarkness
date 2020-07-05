@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import com.mygdx231.game.MyGdxGame1;
 
+import com.mygdx231.game.mainmenu;
 import com.mygdx231.game.obstacles;
 import com.mygdx231.game.sprites.Bird;
 
@@ -35,7 +36,7 @@ public class PlayState extends State {
             mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
             mn.camera.unproject(mn.touchPos6);
 
-            if ((mn.touchPos6.x >= 560 && mn.touchPos6.x <= 600) && (mn.touchPos6.y >= 100 && mn.touchPos6.y <= 140) && mn.pause == 0 && mn.r == true) {
+            if ((mn.touchPos6.x >= MyGdxGame1.xup1 && mn.touchPos6.x <= MyGdxGame1.xup2) && (mn.touchPos6.y >= MyGdxGame1.yup1 && mn.touchPos6.y <= MyGdxGame1.yup2) && mn.pause == 0 && mn.r == true) {
                 // отработка прыжков
 
                 if (mn.y <= 170) {
@@ -57,16 +58,25 @@ public class PlayState extends State {
                 }
             }
         }
-        if (Gdx.input.isTouched()) {
+        if (Gdx.input.isTouched(1)) {
             // if program caught touch on screen
             mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
             mn.camera.unproject(mn.touchPos6);
             // управление персонажем по оси x
-            if ((mn.touchPos6.x >= 60 && mn.touchPos6.x <= 110) && (mn.touchPos6.y >= 70 && mn.touchPos6.y <= 120) && mn.pause == 0 && mn.r == true) {
-                bird.left();
-            }
-            if ((mn.touchPos6.x >= 155 && mn.touchPos6.x <= 205) && (mn.touchPos6.y >= 70 && mn.touchPos6.y <= 120) && mn.pause == 0 && mn.r == true) {
-                bird.right();
+            if(mainmenu.sizeofbuttons == false) {
+                if ((mn.touchPos6.x >= 60 && mn.touchPos6.x <= 110) && (mn.touchPos6.y >= 70 && mn.touchPos6.y <= 120) && mn.pause == 0 && mn.r == true) {
+                    bird.left();
+                }
+                if ((mn.touchPos6.x >= 155 && mn.touchPos6.x <= 205) && (mn.touchPos6.y >= 70 && mn.touchPos6.y <= 120) && mn.pause == 0 && mn.r == true) {
+                    bird.right();
+                }
+            }else{
+                if ((mn.touchPos6.x >= 50 && mn.touchPos6.x <= 113) && (mn.touchPos6.y >= 60 && mn.touchPos6.y <= 123) && mn.pause == 0 && mn.r == true) {
+                    bird.left();
+                }
+                if ((mn.touchPos6.x >= 165 && mn.touchPos6.x <= 228) && (mn.touchPos6.y >= 60 && mn.touchPos6.y <= 123) && mn.pause == 0 && mn.r == true) {
+                    bird.right();
+                }
             }
         }
 
@@ -75,7 +85,7 @@ public class PlayState extends State {
             if (mn.backGround == mn.backGround3) {
                 if (mn.stairs4.overlaps(mn.bucket)) {
                     stairs = true;
-                    mn.batch.draw(mn.down, 560, 40);
+                    mn.batch.draw(mn.down, mn.downrec.x, mn.downrec.y);
 
                     if (Gdx.input.isTouched()) {
                         mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0);// считываем положение касания

@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx231.game.sprites.Bird;
 
-import static com.mygdx231.game.inventory.FontRed1;
-
 public class level5 extends Game {
     MyGdxGame1 game;
     OrthographicCamera camera;
@@ -76,11 +74,11 @@ public class level5 extends Game {
         }
         if(game.backGround == inside){
             if (game.bucket.overlaps(doorinside)) {
-                batch.draw(game.enter, 575, 35);
+                batch.draw(game.enter, 575, 30);
                 if (Gdx.input.justTouched()) { // if program caught touch on screen
                     game.touchPos1.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
                     camera.unproject(game.touchPos1);
-                    if ((game.touchPos1.x >= 575 && game.touchPos1.x <= 626) && (game.touchPos1.y >= 35 && game.touchPos1.y <= 97)) {
+                    if ((game.touchPos1.x >= 575 && game.touchPos1.x <= 626) && (game.touchPos1.y >= 30 && game.touchPos1.y <= 92)) {
                         game.backGround = game.village;
                     }
                 }
@@ -96,9 +94,14 @@ public class level5 extends Game {
                 }
                 if(b == 0) {
                     batch.draw(game.text, 365, 405);
-                    FontRed1.draw(batch, "You almost killed death but do not chill out", 372, 455);
-                    FontRed1.draw(batch, "She can back at anytime but you can buy something", 372, 433);
-                }if (Gdx.input.justTouched()) {
+                    if(mainmenu.language == false){
+                        MyGdxGame1.FontRed1.draw(batch, "You almost killed death but do not chill out", 372, 455);
+                        MyGdxGame1.FontRed1.draw(batch, "She can back at anytime but you can buy something", 372, 433);
+                    }else{
+                        MyGdxGame1.FontRed1.draw(batch, "Ты почти победил смерть,но не расслабляйся", 372, 455);
+                        MyGdxGame1.FontRed1.draw(batch, "Она может вернуться,а пока можешь закупиться", 372, 433);
+                    }
+                    }if (Gdx.input.justTouched()) {
                     // if program caught touch on screen
                     game.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
                     game.camera.unproject(game.touchPos6);
@@ -146,6 +149,11 @@ public class level5 extends Game {
 
     @Override
     public void dispose() {
-
+      door.dispose();
+      mana.dispose();
+      inside.dispose();
+      light.dispose();
+      trader.dispose();
+      buttonbuy.dispose();
     }
 }
