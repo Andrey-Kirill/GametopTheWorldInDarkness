@@ -58,7 +58,7 @@ public class PlayState extends State {
                 }
             }
         }
-        if (Gdx.input.isTouched(1)) {
+        if (Gdx.input.isTouched()) {
             // if program caught touch on screen
             mn.touchPos6.set(Gdx.input.getX(), Gdx.input.getY(), 0); // data of location of touch
             mn.camera.unproject(mn.touchPos6);
