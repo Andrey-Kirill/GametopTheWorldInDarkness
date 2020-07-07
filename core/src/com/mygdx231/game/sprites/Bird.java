@@ -1,8 +1,5 @@
 package com.mygdx231.game.sprites;
 
-
-
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,8 +9,6 @@ import com.mygdx231.game.MyGdxGame1;
 import com.mygdx231.game.inventory;
 import com.mygdx231.game.obstacles;
 import com.mygdx231.game.states.PlayState;
-
-
 
 public class Bird extends Game {
     public static final int GRAVITY = -15;
