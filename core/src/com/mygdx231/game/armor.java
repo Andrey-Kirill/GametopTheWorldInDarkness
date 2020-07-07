@@ -127,9 +127,8 @@ public class armor extends Game{
                 }
             }
         }
-
-
     }
+
 public  void armoron() {
     if (armoronyou == 1) {
         int randomdamage = MathUtils.random(1, 10);

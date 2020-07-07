@@ -111,7 +111,7 @@ public class obstacles extends Game {
         sp3.width = 28;
         sp3.height = 28;
         levels3.add(sp3);
-        lastDropTime3 = TimeUtils.nanoTime();
+        lastDropTime3 = TimeUtils.millis();
     }
     @Override
     public void render() {
@@ -196,10 +196,19 @@ public class obstacles extends Game {
         batch.end();
         // летающие противники для 2 уровня
         if((game.instr==false && game.pause == 0) && game.r==true) {
-
-                if (TimeUtils.nanoTime() - lastDropTime3 > (MathUtils.random(1000000000, 1000000000))) {
+             if(mainmenu.easy == true) {
+                 if (TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 100000))) {
+                     spawn3();
+                 }
+             }if(mainmenu.medium == true){
+                if (TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 33333))) {
                     spawn3();
                 }
+            }if(mainmenu.hard == true){
+                if (TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 10000))) {
+                    spawn3();
+                }
+            }
             Iterator<Rectangle> iter3 = levels3.iterator();
             while (iter3.hasNext()) {
                 Rectangle raindrope = iter3.next();

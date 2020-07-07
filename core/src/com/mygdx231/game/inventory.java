@@ -59,7 +59,6 @@ public class inventory extends Game {
         FontRed1 = new BitmapFont(Gdx.files.internal("arial-15.fnt"));
         FontRed1.setColor(Color.WHITE);
 
-
         batch = new SpriteBatch();
         icontop = new Texture("icontop.png");
         potionhelth = new Texture("potionh.png");

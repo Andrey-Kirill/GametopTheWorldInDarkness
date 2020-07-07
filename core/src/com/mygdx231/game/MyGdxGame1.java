@@ -153,7 +153,7 @@ public class MyGdxGame1 extends Game {
 	long lastDropTime3;
 	public int health = 7;
 	public int a = 7;
-	public int coins = 0;
+	public static int coins = 0;
 	public static BitmapFont FontRed1;
 	public String coin;
 	float delay = 3;
@@ -298,7 +298,7 @@ public class MyGdxGame1 extends Game {
 		text2 = new Texture("text.png");
 		level4 = new Texture("level4.png");
 		tree = new Texture("tree.png");
-		option = new Texture("bth.jpg");
+		option = new Texture("bth.jpeg");
         village = new Texture("village.png");
         maintable = new Texture("maintableingame.png");
         leftsmall = new Texture("left.png");
@@ -496,7 +496,7 @@ public class MyGdxGame1 extends Game {
 		raindrop.width = 25;
 		raindrop.height = 64;
 		raindrops.add(raindrop);
-		lastDropTime = TimeUtils.nanoTime();
+		lastDropTime = TimeUtils.millis();
 	}
 	private void spawn2() {
 		Rectangle sp = new Rectangle();
@@ -505,7 +505,7 @@ public class MyGdxGame1 extends Game {
 		sp.width = 25;
 		sp.height = 64;
 		levels2.add(sp);
-		lastDropTime2 = TimeUtils.nanoTime();
+		lastDropTime2 = TimeUtils.millis();
 	}
 	private void spawn3() {
 		Rectangle sp3 = new Rectangle();
@@ -514,7 +514,7 @@ public class MyGdxGame1 extends Game {
 		sp3.width = 25;
 		sp3.height = 64;
 		levels3.add(sp3);
-		lastDropTime3 = TimeUtils.nanoTime();
+		lastDropTime3 = TimeUtils.millis();
 	}
 /*
 	final int max_level_jump = 300;//переменная обозначающай до какого уровня будет прыгать человечек, можно сделать супер прыжек
@@ -1106,7 +1106,6 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		if(kill==true) {
 			kill = false;
 		}
-
 		bullet.dispose();
 		bulletb = false;
 		bulletrec.x = -2;
@@ -1118,9 +1117,20 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	// отрисовка противников для первого уровня
 	if((instr==false && pause == 0) &&  r==true && (c == 0 || put == false)) {
 		if (backGround == spawn && mm.loading == false) {
-			if (TimeUtils.nanoTime() - lastDropTime > (MathUtils.random(1000000000, 1000000000))) {
-				spawnRaindrop();
-			}
+            if(mainmenu.easy == true){
+                if (TimeUtils.millis() - lastDropTime > (MathUtils.random(1,100000))) {
+                    spawnRaindrop();
+                }
+            } else if(mainmenu.medium == true){
+                if (TimeUtils.millis() - lastDropTime > (MathUtils.random(1,33333))) {
+                    spawnRaindrop();
+                }
+            }
+            else if(mainmenu.hard == true){
+                if (TimeUtils.millis() - lastDropTime > (MathUtils.random(1, 10000))) {
+                    spawnRaindrop();
+                }
+            }
 		}
 		Iterator<Rectangle> iter = raindrops.iterator();
 		while (iter.hasNext()) {
@@ -1164,6 +1174,17 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				}
 			}
 			if (raindrope.overlaps(gun)) {
+				int a = 1;
+				int b = 1;
+				if(mainmenu.easy == true){
+					b = 2;
+				}
+				if(mainmenu.medium == true){
+					b = 4;
+				}
+				if(mainmenu.hard == true){
+					b = 6;
+				}
 				if(mainmenu.options == true) {
 					deaths.play();
 				}
@@ -1178,7 +1199,10 @@ if(begin==false && sps4 == true && mm.loading == false) {
 						}
 					}
 				}
-				coins += 1;
+				int coinget = MathUtils.random(a, b);
+				if(coinget == 1) {
+					coins += 1;
+				}
 			}
 			if (raindrope.overlaps(bulletrec)) {
 				if(mainmenu.options == true) {
@@ -1188,7 +1212,7 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				coins = coins + 1;
 			}
 
-			if (backGround != spawn || death == 0 || sps2 == 0 || raindrope.overlaps(gun) || raindrope.overlaps(bucket) || raindrope.x <= 0 || begin == true || raindrope.overlaps(bulletrec) || health <= 0) {
+			if (backGround != spawn || death == 0 || sps2 == 0 || raindrope.overlaps(gun) || raindrope.overlaps(bucket) || raindrope.x <= 0 || begin == true || raindrope.overlaps(bulletrec) || health <= 0 || returnp == true) {
 				iter.remove();
 			}
 		}
@@ -1199,9 +1223,21 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	// отрисовка противников для второго уровня
 	if((instr==false && pause == 0) && r==true) {
 		if (backGround == level2) {
-			if (TimeUtils.nanoTime() - lastDropTime2 > (MathUtils.random(1000000000, 1000000000))) {
-				spawn2();
-			}
+            if(mainmenu.easy == true) {
+                if (TimeUtils.millis() - lastDropTime2 > (MathUtils.random(1,100000))) {
+                    spawn2();
+                }
+            }
+            else if(mainmenu.medium == true){
+                if (TimeUtils.millis() - lastDropTime2 > (MathUtils.random(1,33333))) {
+                    spawn2();
+                }
+            }
+            else if(mainmenu.hard == true){
+                if (TimeUtils.millis() - lastDropTime2 > (MathUtils.random(1,10000))) {
+                    spawn2();
+                }
+            }
 		}
 		Iterator<Rectangle> iter2 = levels2.iterator();
 		while (iter2.hasNext()) {
@@ -1242,6 +1278,17 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				}
 			}
 			if (raindrope.overlaps(gun)) {
+				int a = 1;
+				int b = 1;
+				if(mainmenu.easy == true){
+					b = 2;
+				}
+				if(mainmenu.medium == true){
+					b = 4;
+				}
+				if(mainmenu.hard == true){
+					b = 6;
+				}
 				randomarmor = MathUtils.random(1, 100);
 				if(mainmenu.options == true) {
 					deaths.play();
@@ -1256,7 +1303,10 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				if(key == 2 && inventory.k2<5){
 					inventory.k2++;
 				}
-				coins = coins + 1;
+				int coinget = MathUtils.random(a, b);
+				if(coinget == 1) {
+					coins += 1;
+				}
 			}
 			if (raindrope.overlaps(bulletrec)) {
 				if(mainmenu.options == true) {
@@ -1277,8 +1327,20 @@ if(begin==false && sps4 == true && mm.loading == false) {
 	// отрисовка противников на третьем уровне
 	if((instr==false && pause == 0) && r==true) {
 		if (backGround == backGround3) {
-			if (TimeUtils.nanoTime() - lastDropTime3 > (MathUtils.random(1000000000, 1000000000))) {
-				spawn3();
+			if(mainmenu.easy == true) {
+				if (TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 100000))) {
+					spawn3();
+				}
+			}
+			if (mainmenu.medium == true) {
+				if(TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 33333))){
+					spawn3();
+				}
+			}
+			if(mainmenu.hard == true){
+				if(TimeUtils.millis() - lastDropTime3 > (MathUtils.random(1, 10000))){
+					spawn3();
+				}
 			}
 		}
 		Iterator<Rectangle> iter3 = levels3.iterator();
@@ -1319,6 +1381,17 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				}
 			}
 			if (raindrope.overlaps(gun)) {
+				int a = 1;
+				int b = 1;
+				if(mainmenu.easy == true){
+					b = 2;
+				}
+				if(mainmenu.medium == true){
+					b = 4;
+				}
+				if(mainmenu.hard == true){
+					b = 6;
+				}
 				randomarmor2 = MathUtils.random(1, 100);
 				if(mainmenu.options == true) {
 					deaths.play();
@@ -1333,7 +1406,10 @@ if(begin==false && sps4 == true && mm.loading == false) {
 				if(key == 3 && inventory.k1<5){
 					inventory.k1++;
 				}
-				coins = coins + 1;
+				int coinget = MathUtils.random(a, b);
+				if(coinget == 1) {
+					coins += 1;
+				}
 			}
 			if (bulletrec.overlaps(raindrope)) {
 				if(mainmenu.options == true) {
@@ -1396,6 +1472,9 @@ if(begin==false && sps4 == true && mm.loading == false) {
 		 }
 		 batch.draw(Menu.invexit,8,422);
 		 if(mainmenu.language == false) {
+		 	batch.draw(mainmenu.easyo,435,200);
+		 	batch.draw(mainmenu.mediumo,552,200);
+		 	batch.draw(mainmenu.hardo,669,200);
 			 if (mainmenu.options == true) {
 				 batch.draw(mainmenu.on, 246, 363);
 			 }
@@ -1414,7 +1493,28 @@ if(begin==false && sps4 == true && mm.loading == false) {
 			 if (mainmenu.sizeofbuttons == false) {
 				 batch.draw(mainmenu.x100, 700, 363);
 			 }
+			 if(mainmenu.easy == true){
+				 batch.draw(mainmenu.easyo,435,200);
+			 }
+			 if(mainmenu.medium == true){
+				 batch.draw(mainmenu.mediumo,552,200);
+			 }
+			 if(mainmenu.hard == true){
+				 batch.draw(mainmenu.hardo,669,200);
+			 }
+			 if(mainmenu.easy == true){
+				 batch.draw(mainmenu.easyo,435,200);
+			 }
+			 if(mainmenu.medium == true){
+				 batch.draw(mainmenu.mediumo,552,200);
+			 }
+			 if(mainmenu.hard == true){
+				 batch.draw(mainmenu.hardo,669,200);
+			 }
 		 }else{
+			 batch.draw(mainmenu.easyrus,345,200);
+			 batch.draw(mainmenu.mediumrus,462,200);
+			 batch.draw(mainmenu.hardrus,579,200);
 			 if (mainmenu.options == true) {
 				 batch.draw(mainmenu.on, 235, 366);
 			 }
@@ -1432,6 +1532,24 @@ if(begin==false && sps4 == true && mm.loading == false) {
 			 }
 			 if (mainmenu.sizeofbuttons == false) {
 				 batch.draw(mainmenu.x100, 708, 366);
+			 }
+			 if(mainmenu.easy == true){
+				 batch.draw(mainmenu.easyrus,345,200);
+			 }
+			 if(mainmenu.medium == true){
+				 batch.draw(mainmenu.mediumrus,462,200);
+			 }
+			 if(mainmenu.hard == true){
+				 batch.draw(mainmenu.hardrus,579,200);
+			 }
+			 if(mainmenu.easy == true){
+				 batch.draw(mainmenu.easyrus,345,200);
+			 }
+			 if(mainmenu.medium == true){
+				 batch.draw(mainmenu.mediumrus,462,200);
+			 }
+			 if(mainmenu.hard == true){
+				 batch.draw(mainmenu.hardrus,579,200);
 			 }
 		 }
 		 batch.end();
