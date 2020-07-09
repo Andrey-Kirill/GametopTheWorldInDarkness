@@ -164,7 +164,7 @@ public class obstacles extends Game {
                     batch.draw(chestarr, 303, 358);
                     FontRed1.draw(batch, arrows, 327, 371);
                 }
-                if(game.chest2 == true){
+                if(game.chest2 == true && mainmenu.easy == false){
                     batch.draw(bow, 370, 415);
                 }
                 if (Gdx.input.justTouched()) {
@@ -176,7 +176,7 @@ public class obstacles extends Game {
                           game.chest = false;
                           game.amount += 10;
                     }
-                    if ((game.touchPos6.x >= 349 && game.touchPos6.x <= 401) && (game.touchPos6.y >= 416 && game.touchPos6.y <= 474) && game.pause == 0 && game.chest2 == true) {
+                    if ((game.touchPos6.x >= 349 && game.touchPos6.x <= 401) && (game.touchPos6.y >= 416 && game.touchPos6.y <= 474) && game.pause == 0 && game.chest2 == true && mainmenu.easy == false) {
                         game.chest2 = false;
                     }
                 }

@@ -72,7 +72,6 @@ public class inventory extends Game {
         keyse2 = new Texture("keyse2.png");
         potionj = new Texture("potionj.png");
         drink = Gdx.audio.newSound(Gdx.files.internal("drink.wav"));
-
     }
 
     @Override
